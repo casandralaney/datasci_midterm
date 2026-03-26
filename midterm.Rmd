@@ -8,6 +8,7 @@ output: pdf_document
 library(tidymodels)
 library(caret)
 library(corrplot)
+library(glmnet)
 ```
 
 # Part I
@@ -64,6 +65,38 @@ featurePlot(x = training_datA[ ,2:16],
 corrplot(cor(x_trainA), method = "circle", type = "full")
 ```
 
+This data set includes 7 binary predictors, 3 categorical predictors, 5 continuous predictors, and 1 continuous outcome in log scale. 
+
+Because the data 
+```{r}
+# Elastic Net
+
+ctrl1 <- trainControl(method = "cv", number = 10) # set up cv
+set.seed(2) # set seed for reproduction
+
+enet.fit <- train(log_PFS ~ . - id, 
+                  data = training_datA, 
+                  method = "glmnet",
+                  tuneGrid = expand.grid(alpha = seq(0, 1, length = 21),
+                                         lambda = exp(seq(0, -6, length = 100))),
+                  trControl = ctrl1)
+
+enet.fit$bestTune
+
+myCol <- rainbow(25)
+myPar <- list(superpose.symbol = list(col = myCol),
+superpose.line = list(col = myCol))
+
+plot(enet.fit, par.settings = myPar, xTrans = log)
+
+# coefficients in the final model
+coef(enet.fit$finalModel, enet.fit$bestTune$lambda)
+```
+
+GAM or mars
+```{r}
+
+```
 
 Results: Report the model. Interpret the model and assess its performance.
 
