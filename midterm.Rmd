@@ -1,0 +1,18 @@
+---
+title: "Midterm"
+author: "Casandra Laney"
+date: "2026-03-26"
+output: html_document
+---
+
+(I) Using this dataset, please help Researcher A build a prediction model for PFS, aiming to understand how demographic, tumor, and treatment characteristics influence progression-free survival in breast cancer patients.
+
+To answer this question, your report should at least include the following:
+
+Model Training: Provide a detailed description of the model training procedure and how you obtained the model. Your description should include sufficient detail so that another statistician can reproduce the same model. Points will be deducted if the details provided are insufficient to reproduce your results.
+
+Results: Report the model. Interpret the model and assess its performance.
+
+
+(II) About a decade later, Researcher B conducted a separate study enrolling 2000 breast cancer patients diagnosed between 2000 and 2005, using the same study design and variable definitions. Like Researcher A’s study, all patients were followed until disease progression or death. Researcher B’s data are stored in datB.RData. Researcher A would like to evaluate whether the prediction model built on the original data generalizes well to Researcher B’s dataset. Does the model generalize well? If yes, provide justification. If not, build a new prediction model for the 2000–2005 cohort and discuss what has changed in prediction.
+
