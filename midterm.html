@@ -420,7 +420,7 @@ y_trainA = training_datA$log_PFS
 
 #test data
 x_testA = model.matrix(log_PFS ~ . - id, testing_datA)[, -1]
-ytestA = testing_datA$log_PFS</code></pre>
+y_testA = testing_datA$log_PFS</code></pre>
 <p>Results: Report the model. Interpret the model and assess its
 performance.</p>
 <ol start="2" style="list-style-type: upper-roman">
