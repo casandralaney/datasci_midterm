@@ -415,12 +415,12 @@ training_datA = training(datA_split)
 testing_datA = testing(datA_split)
 
 #training data
-x = model.matrix(log_PFS ~ ., training_datA)[, -1]
-y = training_datA$log_PFS
+x_trainA = model.matrix(log_PFS ~ . - id, training_datA)[, -1]
+y_trainA = training_datA$log_PFS
 
 #test data
-x2 = model.matrix(log_PFS ~ ., testing_datA)[, -1]
-y2 = testing_datA$log_PFS</code></pre>
+x_testA = model.matrix(log_PFS ~ . - id, testing_datA)[, -1]
+ytestA = testing_datA$log_PFS</code></pre>
 <p>Results: Report the model. Interpret the model and assess its
 performance.</p>
 <ol start="2" style="list-style-type: upper-roman">
@@ -447,12 +447,12 @@ training_datB = training(datB_split)
 testing_datB = testing(datB_split)
 
 #training data
-x = model.matrix(log_PFS ~ ., training_datB)[, -1]
-y = training_datB$log_PFS
+x_trainB = model.matrix(log_PFS ~ . - id, training_datB)[, -1]
+y_trainB = training_datB$log_PFS
 
 #test data
-x2 = model.matrix(log_PFS ~ ., testing_datB)[, -1]
-y2 = testing_datB$log_PFS</code></pre>
+x_testB  = model.matrix(log_PFS ~ . - id, testing_datB)[, -1]
+y_testB = testing_datB$log_PFS</code></pre>
 
 
 
