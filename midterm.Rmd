@@ -95,7 +95,7 @@ y_testB = testing_datB$log_PFS
 ```
 
 ## Exploratory Data Analysis
-```{r}
+```{r warning=FALSE}
 # Feature plots to look at trends between predictors and the outcome (log_PFS)
 featurePlot(x = training_datB[ ,2:16],
             y = training_datB[ ,17],
