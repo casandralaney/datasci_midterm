@@ -9,6 +9,7 @@ library(tidymodels)
 library(caret)
 library(corrplot)
 library(glmnet)
+library(kableExtra)
 ```
 
 # Part I
@@ -103,6 +104,31 @@ coef(enet.fit$finalModel, enet.fit$bestTune$lambda)
 Still to do: predict on testing_datA
 
 Results: Report the model. Interpret the model and assess its performance.
+```{r}
+# Create a table with the model coefficients
+coefs1 <- as.data.frame(as.matrix(coef(enet.fit$finalModel, enet.fit$bestTune$lambda)))
+coefs1$Predictors <- rownames(coefs1)
+colnames(coefs1)[1] <- "Coefficients"
+coefs1 <- coefs1[, c("Predictors", "Coefficients")]
+rownames(coefs1) <- NULL
+coefs1 |>
+  kable()
+
+# Create a table with the model coefficients exponentiated
+coefs2 <- as.data.frame(as.matrix(coef(enet.fit$finalModel, enet.fit$bestTune$lambda)))
+coefs2$Predictors <- rownames(coefs2)
+colnames(coefs2)[1] <- "Exponentiated Coefficients"
+coefs2 <- coefs2[, c("Predictors", "Exponentiated Coefficients")]
+coefs2 <- coefs2 |>
+  filter(Predictors %in% c("(Intercept)", "age", "tumor_size", "tumor_grade", "lymph_nodes", 
+                           "ER", "HER2", "Ki67", "hormonal_therapy"))
+coefs2$`Exponentiated Coefficients`<- exp(coefs2$`Exponentiated Coefficients`)
+rownames(coefs2) <- NULL
+coefs2 |>
+  kable()
+```
+
+
 
 # Part II
 
