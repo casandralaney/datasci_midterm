@@ -53,13 +53,13 @@ theme1$strip.background$col <- rgb(.0, .2, .6, .2)
 trellis.par.set(theme1)
 
 # Feature plots to look at trends between predictors and the outcome (log_PFS)
-featurePlot(x = training_datA[ ,2:16],
+featurePlot(x = training_datA[ ,c(2, 5, 6, 12)],
             y = training_datA[ ,17],
             plot = "scatter",
             span = .5,
             labels = c("Predictors","log_PFS"),
             type = c("p", "smooth"),
-            layout = c(3, 2))
+            layout = c(2, 2))
 
 # Calculates the correlation matrix for all the predictors
 corrplot(cor(x_trainA), method = "circle", type = "full")
@@ -104,7 +104,6 @@ Still to do: predict on testing_datA
 
 Results: Report the model. Interpret the model and assess its performance.
 
-
 # Part II
 
 About a decade later, Researcher B conducted a separate study enrolling 2000 breast cancer patients diagnosed between 2000 and 2005, using the same study design and variable definitions. Like Researcher A’s study, all patients were followed until disease progression or death. Researcher B’s data are stored in datB.RData. Researcher A would like to evaluate whether the prediction model built on the original data generalizes well to Researcher B’s dataset. Does the model generalize well? If yes, provide justification. If not, build a new prediction model for the 2000–2005 cohort and discuss what has changed in prediction.
@@ -118,13 +117,13 @@ datB_clean_eda <- datB |> select(-"id")
 x_B_all <- model.matrix(log_PFS ~ ., datB_clean_eda)[, -1]
 
 # feature plots on full datB
-featurePlot(x = datB[ , 2:16],
+featurePlot(x = datB[ , c(2, 5, 6, 12)],
             y = datB[ , 17],
             plot   = "scatter",
             span   = .5,
             labels = c("Predictors", "log_PFS"),
             type   = c("p", "smooth"),
-            layout = c(3, 2))
+            layout = c(2, 2))
 
 # correlation plot on full datB
 corrplot(cor(x_B_all), method = "circle", type = "full")
