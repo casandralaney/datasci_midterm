@@ -77,7 +77,11 @@ Correlation plot revealed that certain variables were highly correlated. Chose t
 ctrl1 <- trainControl(method = "cv", number = 10) # set up cv
 set.seed(2) # set seed for reproduction
 
-enet.fit <- train(log_PFS ~ . - id, 
+# remove ID
+training_datA <- training_datA |>  select(-"id")
+testing_datA  <- testing_datA  |> select(-"id")
+
+enet.fit <- train(log_PFS ~ ., 
                   data = training_datA, 
                   method = "glmnet",
                   tuneGrid = expand.grid(alpha = seq(0, 1, length = 21),
@@ -96,6 +100,7 @@ plot(enet.fit, par.settings = myPar, xTrans = log)
 coef(enet.fit$finalModel, enet.fit$bestTune$lambda)
 ```
 
+Still to do: predict on testing_datA
 
 Results: Report the model. Interpret the model and assess its performance.
 
@@ -104,9 +109,57 @@ Results: Report the model. Interpret the model and assess its performance.
 
 About a decade later, Researcher B conducted a separate study enrolling 2000 breast cancer patients diagnosed between 2000 and 2005, using the same study design and variable definitions. Like Researcher A’s study, all patients were followed until disease progression or death. Researcher B’s data are stored in datB.RData. Researcher A would like to evaluate whether the prediction model built on the original data generalizes well to Researcher B’s dataset. Does the model generalize well? If yes, provide justification. If not, build a new prediction model for the 2000–2005 cohort and discuss what has changed in prediction.
 
+## Import and explore the full dataset
+```{r, warning=FALSE}
+load("data/datB.RData")
+
+# remove id for matrix operations
+datB_clean_eda <- datB |> select(-"id")
+x_B_all <- model.matrix(log_PFS ~ ., datB_clean_eda)[, -1]
+
+# feature plots on full datB
+featurePlot(x = datB[ , 2:16],
+            y = datB[ , 17],
+            plot   = "scatter",
+            span   = .5,
+            labels = c("Predictors", "log_PFS"),
+            type   = c("p", "smooth"),
+            layout = c(3, 2))
+
+# correlation plot on full datB
+corrplot(cor(x_B_all), method = "circle", type = "full")
+```
+
+
+## Import and evaluate the model's performance on researcher B's dataset
+```{r}
+
+# remove ID
+datB <- datB |>  select(-"id")
+
+# use all of datB to test generalizability of elastic net model
+enet_pred_B <- predict(enet.fit, newdata = datB)
+
+# compare performance (will update once model is tested on datA testing split)
+# rmse_A <- RMSE(enet_pred_A,     testing_datA$log_PFS)
+# r2_A   <- R2(enet_pred_A,       testing_datA$log_PFS)
+rmse_B <- RMSE(enet_pred_B, datB$log_PFS)
+r2_B   <- R2(enet_pred_B,   datB$log_PFS)
+
+# cat("datA Test RMSE:", round(rmse_A, 4), "\n")
+# cat("datA Test R²:  ", round(r2_A,   4), "\n\n")
+cat("datB RMSE:     ", round(rmse_B, 4), "\n")
+cat("datB R²:       ", round(r2_B,   4), "\n")
+
+# will add adjusted r^2
+
+```
+
+
+## TO DO ONLY IF NEED TO CREATE NEW MODEL
+
 ## Import and partition data using 'tidymodels' package
 ```{r}
-load("data/datB.RData")
 
 set.seed(2222)
 
@@ -117,11 +170,11 @@ training_datB = training(datB_split)
 testing_datB = testing(datB_split)
 
 #training data
-x_trainB = model.matrix(log_PFS ~ . - id, training_datB)[, -1]
+x_trainB = model.matrix(log_PFS ~ ., training_datB)[, -1]
 y_trainB = training_datB$log_PFS
 
 #test data
-x_testB  = model.matrix(log_PFS ~ . - id, testing_datB)[, -1]
+x_testB  = model.matrix(log_PFS ~ ., testing_datB)[, -1]
 y_testB = testing_datB$log_PFS
 
 ```
@@ -129,17 +182,19 @@ y_testB = testing_datB$log_PFS
 ## Exploratory Data Analysis
 ```{r warning=FALSE}
 # Feature plots to look at trends between predictors and the outcome (log_PFS)
-featurePlot(x = training_datB[ ,2:16],
-            y = training_datB[ ,17],
-            plot = "scatter",
-            span = .5,
-            labels = c("Predictors","log_PFS"),
-            type = c("p", "smooth"),
-            layout = c(3, 2))
-
-# Calculates the correlation matrix for all the predictors
-corrplot(cor(x_trainB), method = "circle", type = "full")
+# featurePlot(x = training_datB[ ,2:16],
+#             y = training_datB[ ,17],
+#             plot = "scatter",
+#             span = .5,
+#             labels = c("Predictors","log_PFS"),
+#             type = c("p", "smooth"),
+#             layout = c(3, 2))
+# 
+# # Calculates the correlation matrix for all the predictors
+# corrplot(cor(x_trainB), method = "circle", type = "full")
 ```
+
+
 
 Run GAM or MARs if model isn't super generalizable?
 
