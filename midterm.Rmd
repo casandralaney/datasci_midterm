@@ -107,8 +107,8 @@ Still to do: predict on testing_datA
 # predict on testing_datA
 enet.pred <- predict(enet.fit, newdata = testing_datA)
 
-# test error (MSE)
-mean((enet.pred - testing_datA[, "log_PFS"])^2)
+rmse <- RMSE(enet.pred, testing_datA$log_PFS)
+r2   <- R2(enet.pred,   testing_datA$log_PFS)
 ```
 
 

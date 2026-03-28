@@ -171,7 +171,7 @@ package}\label{import-and-partition-data-using-tidymodels-package}
 \begin{Highlighting}[]
 \FunctionTok{load}\NormalTok{(}\StringTok{"data/datA.RData"}\NormalTok{)}
 
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2222}\NormalTok{)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2}\NormalTok{)}
 
 \NormalTok{datA\_split }\OtherTok{=} \FunctionTok{initial\_split}\NormalTok{(datA, }\AttributeTok{prop =} \FloatTok{0.8}\NormalTok{)}
 
@@ -267,7 +267,7 @@ colinearity for {[}{]} and {[}{]} reasons
 
 \begin{verbatim}
 ##      alpha     lambda
-## 1944  0.95 0.01235197
+## 2045     1 0.01312373
 \end{verbatim}
 
 \begin{Shaded}
@@ -291,23 +291,23 @@ colinearity for {[}{]} and {[}{]} reasons
 
 \begin{verbatim}
 ## 16 x 1 sparse Matrix of class "dgCMatrix"
-##                  s=0.01235197
-## (Intercept)       2.656050011
-## age              -0.001046560
+##                  s=0.01312373
+## (Intercept)       2.775488586
+## age              -0.002649168
 ## menopause         .          
 ## race              .          
 ## bmi               .          
-## tumor_size       -0.057703954
-## tumor_grade      -0.066041243
-## lymph_nodes      -0.056993530
-## ER                0.220684085
+## tumor_size       -0.053637711
+## tumor_grade      -0.080081328
+## lymph_nodes      -0.054497860
+## ER                0.181544390
 ## PR                .          
-## HER2             -0.176250264
-## Ki67             -0.003932773
+## HER2             -0.177297122
+## Ki67             -0.003930509
 ## stage             .          
-## surgery           .          
+## surgery          -0.005056867
 ## chemo             .          
-## hormonal_therapy  0.137999051
+## hormonal_therapy  0.160451277
 \end{verbatim}
 
 Still to do: predict on testing\_datA
@@ -317,14 +317,10 @@ Still to do: predict on testing\_datA
 \CommentTok{\# predict on testing\_datA}
 \NormalTok{enet.pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(enet.fit, }\AttributeTok{newdata =}\NormalTok{ testing\_datA)}
 
-\CommentTok{\# test error (MSE)}
-\FunctionTok{mean}\NormalTok{((enet.pred }\SpecialCharTok{{-}}\NormalTok{ testing\_datA[, }\StringTok{"log\_PFS"}\NormalTok{])}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{rmse }\OtherTok{\textless{}{-}} \FunctionTok{RMSE}\NormalTok{(enet.pred, testing\_datA}\SpecialCharTok{$}\NormalTok{log\_PFS)}
+\NormalTok{r2   }\OtherTok{\textless{}{-}} \FunctionTok{R2}\NormalTok{(enet.pred,   testing\_datA}\SpecialCharTok{$}\NormalTok{log\_PFS)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## [1] 0.4955286
-\end{verbatim}
 
 Results: Report the model. Interpret the model and assess its
 performance.
@@ -349,22 +345,22 @@ Predictors & Coefficients \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-(Intercept) & 2.6560500 \\
-age & -0.0010466 \\
+(Intercept) & 2.7754886 \\
+age & -0.0026492 \\
 menopause & 0.0000000 \\
 race & 0.0000000 \\
 bmi & 0.0000000 \\
-tumor\_size & -0.0577040 \\
-tumor\_grade & -0.0660412 \\
-lymph\_nodes & -0.0569935 \\
-ER & 0.2206841 \\
+tumor\_size & -0.0536377 \\
+tumor\_grade & -0.0800813 \\
+lymph\_nodes & -0.0544979 \\
+ER & 0.1815444 \\
 PR & 0.0000000 \\
-HER2 & -0.1762503 \\
-Ki67 & -0.0039328 \\
+HER2 & -0.1772971 \\
+Ki67 & -0.0039305 \\
 stage & 0.0000000 \\
-surgery & 0.0000000 \\
+surgery & -0.0050569 \\
 chemo & 0.0000000 \\
-hormonal\_therapy & 0.1379991 \\
+hormonal\_therapy & 0.1604513 \\
 \end{longtable}
 
 \begin{Shaded}
@@ -391,15 +387,15 @@ Predictors & Exponentiated Coefficients \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-(Intercept) & 14.2399303 \\
-age & 0.9989540 \\
-tumor\_size & 0.9439294 \\
-tumor\_grade & 0.9360923 \\
-lymph\_nodes & 0.9446002 \\
-ER & 1.2469294 \\
-HER2 & 0.8384081 \\
-Ki67 & 0.9960750 \\
-hormonal\_therapy & 1.1479745 \\
+(Intercept) & 16.0464652 \\
+age & 0.9973543 \\
+tumor\_size & 0.9477754 \\
+tumor\_grade & 0.9230413 \\
+lymph\_nodes & 0.9469605 \\
+ER & 1.1990678 \\
+HER2 & 0.8375309 \\
+Ki67 & 0.9960772 \\
+hormonal\_therapy & 1.1740406 \\
 \end{longtable}
 
 \section{Part II}\label{part-ii}
@@ -528,7 +524,7 @@ dataset}\label{evaluate-the-models-performance-on-researcher-bs-dataset}
 \end{Shaded}
 
 \begin{verbatim}
-## datB RMSE:      0.8383
+## datB RMSE:      0.8356
 \end{verbatim}
 
 \begin{Shaded}
@@ -538,7 +534,7 @@ dataset}\label{evaluate-the-models-performance-on-researcher-bs-dataset}
 \end{Shaded}
 
 \begin{verbatim}
-## datB R²:        0.1489
+## datB R²:        0.151
 \end{verbatim}
 
 \begin{Shaded}
@@ -612,8 +608,8 @@ Analysis}\label{exploratory-data-analysis-1}
 \end{Shaded}
 
 \begin{verbatim}
-##   nprune degree
-## 9     10      1
+##    nprune degree
+## 14     15      1
 \end{verbatim}
 
 \begin{Shaded}

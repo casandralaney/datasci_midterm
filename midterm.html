@@ -475,9 +475,8 @@ coef(enet.fit$finalModel, enet.fit$bestTune$lambda)</code></pre>
 <pre class="r"><code># predict on testing_datA
 enet.pred &lt;- predict(enet.fit, newdata = testing_datA)
 
-# test error (MSE)
-mean((enet.pred - testing_datA[, &quot;log_PFS&quot;])^2)</code></pre>
-<pre><code>## [1] 0.5580437</code></pre>
+rmse &lt;- RMSE(enet.pred, testing_datA$log_PFS)
+r2   &lt;- R2(enet.pred,   testing_datA$log_PFS)</code></pre>
 <p>Results: Report the model. Interpret the model and assess its
 performance.</p>
 <pre class="r"><code># Create a table with the model coefficients
