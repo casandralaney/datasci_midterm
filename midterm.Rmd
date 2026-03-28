@@ -10,6 +10,7 @@ library(caret)
 library(corrplot)
 library(glmnet)
 library(kableExtra)
+library(earth)
 ```
 
 # Part I
@@ -138,25 +139,31 @@ About a decade later, Researcher B conducted a separate study enrolling 2000 bre
 ```{r, warning=FALSE}
 load("data/datB.RData")
 
+# basic summary
+summary(datB)
+
+# compare distributions of key variables between datasets
+par(mfrow = c(1, 2))
+hist(datA$age, main = "Age - Training", xlab = "Age")
+hist(datB$age, main = "Age - New Data", xlab = "Age")
+
+par(mfrow = c(1, 2))
+hist(datA$tumor_size, main = "Tumor Size - Training", xlab = "Tumor Size")
+hist(datB$tumor_size, main = "Tumor Size - New Data", xlab = "Tumor Size")
+
+par(mfrow = c(1, 2))
+hist(datA$tumor_grade, main = "Tumor Grade - Training", xlab = "Tumor Grade")
+hist(datB$tumor_grade, main = "Tumor Grade - New Data", xlab = "Tumor Grade")
+
+
 # remove id for matrix operations
 datB_clean_eda <- datB |> select(-"id")
 x_B_all <- model.matrix(log_PFS ~ ., datB_clean_eda)[, -1]
 
-# feature plots on full datB
-featurePlot(x = datB[ , c(2, 5, 6, 12)],
-            y = datB[ , 17],
-            plot   = "scatter",
-            span   = .5,
-            labels = c("Predictors", "log_PFS"),
-            type   = c("p", "smooth"),
-            layout = c(2, 2))
-
-# correlation plot on full datB
-corrplot(cor(x_B_all), method = "circle", type = "full")
 ```
 
 
-## Import and evaluate the model's performance on researcher B's dataset
+## Evaluate the model's performance on researcher B's dataset
 ```{r}
 
 # remove ID
@@ -180,13 +187,14 @@ cat("datB R²:       ", round(r2_B,   4), "\n")
 
 ```
 
+The elastic net model explained approximately 15% of the variance in the log-transformed PFS in the 2000 to 2005 study cohort, suggesting weak  predictive performance.
 
 ## TO DO ONLY IF NEED TO CREATE NEW MODEL
 
 ## Import and partition data using 'tidymodels' package
 ```{r}
 
-set.seed(2222)
+set.seed(2)
 
 datB_split = initial_split(datB, prop = 0.8)
 
@@ -217,6 +225,29 @@ y_testB = testing_datB$log_PFS
 # 
 # # Calculates the correlation matrix for all the predictors
 # corrplot(cor(x_trainB), method = "circle", type = "full")
+```
+
+# GAM model
+```{r}
+mars.fit <- train(log_PFS ~ .,
+                  data = training_datA,
+                  method = "earth",
+                  tuneGrid = expand.grid(degree = 1:3,
+                                        nprune = 2:20),
+                  trControl = ctrl1)
+
+mars.fit$bestTune
+
+# evaluate on testing_datA (internal test split)
+pred_mars_testA <- predict(mars.fit, newdata = testing_datA)
+rmse_mars_testA <- sqrt(mean((pred_mars_testA - testing_datA$log_PFS)^2))
+r2_mars_testA <- cor(pred_mars_testA, testing_datA$log_PFS)^2
+
+# evaluate on datB (external validation)
+pred_mars_B <- predict(mars.fit, newdata = datB)
+rmse_mars_B <- sqrt(mean((pred_mars_B - datB$log_PFS)^2))
+r2_mars_B <- cor(pred_mars_B, datB$log_PFS)^2
+
 ```
 
 
