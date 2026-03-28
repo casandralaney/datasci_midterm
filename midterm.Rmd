@@ -25,7 +25,7 @@ Model Training: Provide a detailed description of the model training procedure a
 ```{r}
 load("data/datA.RData")
 
-set.seed(2222)
+set.seed(2)
 
 datA_split = initial_split(datA, prop = 0.8)
 
