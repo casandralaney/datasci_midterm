@@ -364,11 +364,5 @@ coef_comparison |>
         col.names = c("Predictor",
                       "datA (Exp. Coefficient)",
                       "datB (Exp. Coefficient)",
-                      "Difference")) |>
-  kable_styling(full_width = FALSE) |>
-  add_footnote("Exponentiated coefficients represent multiplicative effects on PFS. 
-                Values above 1 indicate longer PFS, below 1 indicate shorter PFS. 
-                Difference = datB minus datA on the exponentiated scale.
-                Values of 1.000 indicate the variable was excluded by elastic net regularization.",
-               notation = "none")
+                      "Difference")) 
 ```
