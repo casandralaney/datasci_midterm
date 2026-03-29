@@ -130,15 +130,15 @@ rownames(coefs1) <- NULL
 coefs1 |>
   kable()
 
-# Create a table with the interpretable output
+# Create a table with the exponentiated coefficients
 coefs2 <- as.data.frame(as.matrix(coef(enet.fit$finalModel, enet.fit$bestTune$lambda)))
 coefs2$Predictors <- rownames(coefs2)
-colnames(coefs2)[1] <- "Percent Change in PFS"
-coefs2 <- coefs2[, c("Predictors", "Percent Change in PFS")]
+colnames(coefs2)[1] <- "Exponentiated Coefficients"
+coefs2 <- coefs2[, c("Predictors", "Exponentiated Coefficients")]
 coefs2 <- coefs2 |>
   filter(Predictors %in% c("(Intercept)", "age", "tumor_size", "tumor_grade", "lymph_nodes", 
                            "ER", "HER2", "Ki67", "hormonal_therapy"))
-coefs2$`Percent Change in PFS`<- (exp(coefs2$`Percent Change in PFS`)-1)*100
+coefs2$`Exponentiated Coefficients`<- exp(coefs2$`Exponentiated Coefficients`)
 rownames(coefs2) <- NULL
 coefs2 |>
   kable()
@@ -231,7 +231,7 @@ corrplot(cor(x_trainB), method = "circle", type = "full")
 ```{r}
 # Elastic Net
 
-trainControl(method = "cv", number = 10)
+set.seed(2)
 ctrl1 <- trainControl(method = "cv", number = 10) # set up cv
 set.seed(2) # set seed for reproduction
 
@@ -278,15 +278,15 @@ rownames(coefs1) <- NULL
 coefs1 |>
   kable()
 
-# Create a table with the interpretable output
+# Create a table with the exponentiated coefficients
 coefs2 <- as.data.frame(as.matrix(coef(enet.test.b$finalModel, enet.test.b$bestTune$lambda)))
 coefs2$Predictors <- rownames(coefs2)
-colnames(coefs2)[1] <- "Percent Change in PFS"
-coefs2 <- coefs2[, c("Predictors", "Percent Change in PFS")]
+colnames(coefs2)[1] <- "Exponentiated Coefficients"
+coefs2 <- coefs2[, c("Predictors", "Exponentiated Coefficients")]
 coefs2 <- coefs2 |>
   filter(Predictors %in% c("(Intercept)", "age", "race", "bmi", "tumor_size", "tumor_grade", "lymph_nodes", 
                            "ER", "PR", "HER2", "Ki67", "surgery", "chemo", "hormonal_therapy"))
-coefs2$`Percent Change in PFS`<- (exp(coefs2$`Percent Change in PFS`)-1)*100
+coefs2$`Exponentiated Coefficients`<- exp(coefs2$`Exponentiated Coefficients`)
 rownames(coefs2) <- NULL
 coefs2 |>
   kable() 
