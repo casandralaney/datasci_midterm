@@ -843,9 +843,6 @@ coefs2 &lt;- as.data.frame(as.matrix(coef(enet.fit$finalModel, enet.fit$bestTune
 coefs2$Predictors &lt;- rownames(coefs2)
 colnames(coefs2)[1] &lt;- &quot;Exponentiated Coefficients&quot;
 coefs2 &lt;- coefs2[, c(&quot;Predictors&quot;, &quot;Exponentiated Coefficients&quot;)]
-coefs2 &lt;- coefs2 |&gt;
-  filter(Predictors %in% c(&quot;(Intercept)&quot;, &quot;age&quot;, &quot;tumor_size&quot;, &quot;tumor_grade&quot;, &quot;lymph_nodes&quot;, 
-                           &quot;ER&quot;, &quot;HER2&quot;, &quot;Ki67&quot;, &quot;hormonal_therapy&quot;))
 coefs2$`Exponentiated Coefficients`&lt;- exp(coefs2$`Exponentiated Coefficients`)
 rownames(coefs2) &lt;- NULL
 coefs2 |&gt;
@@ -867,16 +864,76 @@ coefs2 |&gt;
 <td align="right">0.9974313</td>
 </tr>
 <tr class="odd">
+<td align="left">menopause1</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">race2</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">race3</td>
+<td align="right">1.0109216</td>
+</tr>
+<tr class="even">
+<td align="left">race4</td>
+<td align="right">0.9758460</td>
+</tr>
+<tr class="odd">
+<td align="left">bmi</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
 <td align="left">tumor_size</td>
 <td align="right">0.9469225</td>
 </tr>
+<tr class="odd">
+<td align="left">tumor_grade2</td>
+<td align="right">1.0000000</td>
+</tr>
 <tr class="even">
+<td align="left">tumor_grade3</td>
+<td align="right">0.8996783</td>
+</tr>
+<tr class="odd">
 <td align="left">lymph_nodes</td>
 <td align="right">0.9474158</td>
+</tr>
+<tr class="even">
+<td align="left">ER1</td>
+<td align="right">1.1864073</td>
+</tr>
+<tr class="odd">
+<td align="left">PR1</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">HER21</td>
+<td align="right">0.8409666</td>
 </tr>
 <tr class="odd">
 <td align="left">Ki67</td>
 <td align="right">0.9953707</td>
+</tr>
+<tr class="even">
+<td align="left">stage2</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">stage3</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">surgery1</td>
+<td align="right">0.9990344</td>
+</tr>
+<tr class="odd">
+<td align="left">chemo1</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">hormonal_therapy1</td>
+<td align="right">1.1722820</td>
 </tr>
 </tbody>
 </table>
@@ -1204,9 +1261,6 @@ coefs2 &lt;- as.data.frame(as.matrix(coef(enet.test.b$finalModel, enet.test.b$be
 coefs2$Predictors &lt;- rownames(coefs2)
 colnames(coefs2)[1] &lt;- &quot;Exponentiated Coefficients&quot;
 coefs2 &lt;- coefs2[, c(&quot;Predictors&quot;, &quot;Exponentiated Coefficients&quot;)]
-coefs2 &lt;- coefs2 |&gt;
-  filter(Predictors %in% c(&quot;(Intercept)&quot;, &quot;age&quot;, &quot;race&quot;, &quot;bmi&quot;, &quot;tumor_size&quot;, &quot;tumor_grade&quot;, &quot;lymph_nodes&quot;, 
-                           &quot;ER&quot;, &quot;PR&quot;, &quot;HER2&quot;, &quot;Ki67&quot;, &quot;surgery&quot;, &quot;chemo&quot;, &quot;hormonal_therapy&quot;))
 coefs2$`Exponentiated Coefficients`&lt;- exp(coefs2$`Exponentiated Coefficients`)
 rownames(coefs2) &lt;- NULL
 coefs2 |&gt;
@@ -1228,6 +1282,22 @@ coefs2 |&gt;
 <td align="right">0.9975314</td>
 </tr>
 <tr class="odd">
+<td align="left">menopause1</td>
+<td align="right">0.9918992</td>
+</tr>
+<tr class="even">
+<td align="left">race2</td>
+<td align="right">0.9606887</td>
+</tr>
+<tr class="odd">
+<td align="left">race3</td>
+<td align="right">0.9758666</td>
+</tr>
+<tr class="even">
+<td align="left">race4</td>
+<td align="right">1.0713840</td>
+</tr>
+<tr class="odd">
 <td align="left">bmi</td>
 <td align="right">0.9984558</td>
 </tr>
@@ -1236,12 +1306,52 @@ coefs2 |&gt;
 <td align="right">0.9586838</td>
 </tr>
 <tr class="odd">
+<td align="left">tumor_grade2</td>
+<td align="right">1.0776326</td>
+</tr>
+<tr class="even">
+<td align="left">tumor_grade3</td>
+<td align="right">0.8989149</td>
+</tr>
+<tr class="odd">
 <td align="left">lymph_nodes</td>
 <td align="right">0.9835257</td>
 </tr>
 <tr class="even">
+<td align="left">ER1</td>
+<td align="right">1.1559320</td>
+</tr>
+<tr class="odd">
+<td align="left">PR1</td>
+<td align="right">1.1010774</td>
+</tr>
+<tr class="even">
+<td align="left">HER21</td>
+<td align="right">1.0250535</td>
+</tr>
+<tr class="odd">
 <td align="left">Ki67</td>
 <td align="right">0.9952374</td>
+</tr>
+<tr class="even">
+<td align="left">stage2</td>
+<td align="right">1.0031256</td>
+</tr>
+<tr class="odd">
+<td align="left">stage3</td>
+<td align="right">0.9285338</td>
+</tr>
+<tr class="even">
+<td align="left">surgery1</td>
+<td align="right">0.9749917</td>
+</tr>
+<tr class="odd">
+<td align="left">chemo1</td>
+<td align="right">0.9695701</td>
+</tr>
+<tr class="even">
+<td align="left">hormonal_therapy1</td>
+<td align="right">1.1794988</td>
 </tr>
 </tbody>
 </table>
