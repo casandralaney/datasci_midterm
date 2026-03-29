@@ -197,14 +197,17 @@ enet_pred_B <- predict(enet.fit, newdata = all_datB)
 
 # Compare performances
 rmse_B <- RMSE(enet_pred_B, all_datB$log_PFS)
+r2_B <- R2(enet_pred_B, all_datB$log_PFS)
+
 
 # Report table comparing performance
 performance_table <- data.frame(
   Dataset = c("datA (Internal Test Set)", "datB (External Validation)"),
-  RMSE = c(round(rmse_A, 4), round(rmse_B, 4))
+  RMSE = c(round(rmse_A, 4), round(rmse_B, 4)),
+  r2 = c(round(r2_A, 4), round(r2_B, 4))
 )
 
-colnames(performance_table) <- c("Dataset", "RMSE")
+colnames(performance_table) <- c("Dataset", "RMSE", "R^2")
 
 performance_table |>
   kable(caption = "Elastic Net Model Performance: Internal vs External Validation") |>
@@ -323,45 +326,49 @@ tibble(
 
 ## Compare coefficients from datA & datB model
 ```{r}
-# Extract coefficients from both models
-coefs_A <- as.data.frame(as.matrix(coef(enet.fit$finalModel, enet.fit$bestTune$lambda)))
-coefs_B <- as.data.frame(as.matrix(coef(enet.test.b$finalModel, enet.test.b$bestTune$lambda)))
+## Compare datA & datB model's exponentiated values
 
-# Rename columns
+# extract coefficients from both models
+coefs_A <- as.data.frame(as.matrix(coef(enet.fit$finalModel, 
+                                         enet.fit$bestTune$lambda)))
+coefs_B <- as.data.frame(as.matrix(coef(enet.test.b$finalModel, 
+                                         enet.test.b$bestTune$lambda)))
+
+# rename columns
 colnames(coefs_A) <- "Coef_datA"
 colnames(coefs_B) <- "Coef_datB"
 
-# Add predictor names
+# add predictor names
 coefs_A$Predictor <- rownames(coefs_A)
 coefs_B$Predictor <- rownames(coefs_B)
 
-# Merge both into one table
+# merge both into one table
 coef_comparison <- merge(coefs_A, coefs_B, by = "Predictor", all = TRUE)
 
-# Add a column showing the difference
-coef_comparison$Difference <- coef_comparison$Coef_datB - coef_comparison$Coef_datA
+# exponentiate both and compute difference on exponentiated scale
+coef_comparison$Exp_datA   <- round(exp(coef_comparison$Coef_datA), 4)
+coef_comparison$Exp_datB   <- round(exp(coef_comparison$Coef_datB), 4)
+coef_comparison$Difference <- round(coef_comparison$Exp_datB - coef_comparison$Exp_datA, 4)
 
-# Round for readability
-coef_comparison$Coef_datA <- round(coef_comparison$Coef_datA, 4)
-coef_comparison$Coef_datB <- round(coef_comparison$Coef_datB, 4)
-coef_comparison$Difference <- round(coef_comparison$Difference, 4)
-
-# Reorder columns
-coef_comparison <- coef_comparison[, c("Predictor", "Coef_datA", "Coef_datB", "Difference")]
-
-# Sort by absolute difference to highlight what changed most
-coef_comparison <- coef_comparison[order(abs(coef_comparison$Difference), decreasing = TRUE), ]
-
+# sort by absolute difference
+coef_comparison <- coef_comparison[order(abs(coef_comparison$Difference), 
+                                          decreasing = TRUE), ]
 rownames(coef_comparison) <- NULL
 
-# Display table
+# keep only exponentiated columns
+coef_comparison <- coef_comparison[, c("Predictor", "Exp_datA", "Exp_datB", "Difference")]
+
+# display table
 coef_comparison |>
-  kable(caption = "Comparison of Elastic Net Coefficients from datA and datB Models",
-        col.names = c("Predictor", "datA Coefficient", "datB Coefficient", "Difference")) |> 
-  add_footnote("Coefficients are on the log-PFS scale, Difference = datB minus datA. 
-                Variables with zero coefficients were excluded by elastic net regularization.",
+  kable(caption = "Comparison of Elastic Net Coefficients: datA vs datB",
+        col.names = c("Predictor",
+                      "datA (Exp. Coefficient)",
+                      "datB (Exp. Coefficient)",
+                      "Difference")) |>
+  kable_styling(full_width = FALSE) |>
+  add_footnote("Exponentiated coefficients represent multiplicative effects on PFS. 
+                Values above 1 indicate longer PFS, below 1 indicate shorter PFS. 
+                Difference = datB minus datA on the exponentiated scale.
+                Values of 1.000 indicate the variable was excluded by elastic net regularization.",
                notation = "none")
 ```
-
-
-
