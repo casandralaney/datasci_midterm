@@ -81,6 +81,7 @@ Correlation plot revealed that certain variables were highly correlated. Chose t
 ```{r}
 # Elastic Net
 
+set.seed(2)
 ctrl1 <- trainControl(method = "cv", number = 10) # set up cv
 set.seed(2) # set seed for reproduction
 
@@ -230,6 +231,7 @@ corrplot(cor(x_trainB), method = "circle", type = "full")
 ```{r}
 # Elastic Net
 
+trainControl(method = "cv", number = 10)
 ctrl1 <- trainControl(method = "cv", number = 10) # set up cv
 set.seed(2) # set seed for reproduction
 

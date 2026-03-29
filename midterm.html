@@ -655,6 +655,7 @@ correlated. Chose to address this with elastic net because we can
 address colinearity for [] and [] reasons</p>
 <pre class="r"><code># Elastic Net
 
+set.seed(2)
 ctrl1 &lt;- trainControl(method = &quot;cv&quot;, number = 10) # set up cv
 set.seed(2) # set seed for reproduction
 
@@ -999,7 +1000,123 @@ corrplot(cor(x_trainB), method = &quot;circle&quot;, type = &quot;full&quot;)</c
 <h2>Elastic Net model</h2>
 <pre class="r"><code># Elastic Net
 
-ctrl1 &lt;- trainControl(method = &quot;cv&quot;, number = 10) # set up cv
+trainControl(method = &quot;cv&quot;, number = 10)</code></pre>
+<pre><code>## $method
+## [1] &quot;cv&quot;
+## 
+## $number
+## [1] 10
+## 
+## $repeats
+## [1] NA
+## 
+## $search
+## [1] &quot;grid&quot;
+## 
+## $p
+## [1] 0.75
+## 
+## $initialWindow
+## NULL
+## 
+## $horizon
+## [1] 1
+## 
+## $fixedWindow
+## [1] TRUE
+## 
+## $skip
+## [1] 0
+## 
+## $verboseIter
+## [1] FALSE
+## 
+## $returnData
+## [1] TRUE
+## 
+## $returnResamp
+## [1] &quot;final&quot;
+## 
+## $savePredictions
+## [1] FALSE
+## 
+## $classProbs
+## [1] FALSE
+## 
+## $summaryFunction
+## function (data, lev = NULL, model = NULL) 
+## {
+##     if (is.character(data$obs)) 
+##         data$obs &lt;- factor(data$obs, levels = lev)
+##     postResample(data[, &quot;pred&quot;], data[, &quot;obs&quot;])
+## }
+## &lt;bytecode: 0x0000027636a40778&gt;
+## &lt;environment: namespace:caret&gt;
+## 
+## $selectionFunction
+## [1] &quot;best&quot;
+## 
+## $preProcOptions
+## $preProcOptions$thresh
+## [1] 0.95
+## 
+## $preProcOptions$ICAcomp
+## [1] 3
+## 
+## $preProcOptions$k
+## [1] 5
+## 
+## $preProcOptions$freqCut
+## [1] 19
+## 
+## $preProcOptions$uniqueCut
+## [1] 10
+## 
+## $preProcOptions$cutoff
+## [1] 0.9
+## 
+## 
+## $sampling
+## NULL
+## 
+## $index
+## NULL
+## 
+## $indexOut
+## NULL
+## 
+## $indexFinal
+## NULL
+## 
+## $timingSamps
+## [1] 0
+## 
+## $predictionBounds
+## [1] FALSE FALSE
+## 
+## $seeds
+## [1] NA
+## 
+## $adaptive
+## $adaptive$min
+## [1] 5
+## 
+## $adaptive$alpha
+## [1] 0.05
+## 
+## $adaptive$method
+## [1] &quot;gls&quot;
+## 
+## $adaptive$complete
+## [1] TRUE
+## 
+## 
+## $trim
+## [1] FALSE
+## 
+## $allowParallel
+## [1] TRUE</code></pre>
+<pre class="r"><code>ctrl1 &lt;- trainControl(method = &quot;cv&quot;, number = 10) # set up cv
 set.seed(2) # set seed for reproduction
 
 enet.test.b &lt;- train(log_PFS ~ ., 
