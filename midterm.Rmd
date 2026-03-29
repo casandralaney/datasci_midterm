@@ -13,6 +13,7 @@ library(kableExtra)
 library(earth)
 ```
 
+
 # Part I
 
 Using this dataset, please help Researcher A build a prediction model for PFS, aiming to understand how demographic, tumor, and treatment characteristics influence progression-free survival in breast cancer patients.
@@ -29,18 +30,21 @@ set.seed(2)
 
 datA_split = initial_split(datA, prop = 0.8)
 
-#extract the training and test data
+# Extract the training and test data
 training_datA = training(datA_split)
 testing_datA = testing(datA_split)
 
-#training data
+# Training data
 x_trainA = model.matrix(log_PFS ~ . - id, training_datA)[, -1]
 y_trainA = training_datA$log_PFS
 
-#test data
+# Test data
 x_testA = model.matrix(log_PFS ~ . - id, testing_datA)[, -1]
 y_testA = testing_datA$log_PFS
 
+# Remove ID
+training_datA <- training_datA |>  select(-"id")
+testing_datA  <- testing_datA  |> select(-"id")
 ```
 
 ## Exploratory Data Analysis
@@ -55,8 +59,8 @@ theme1$strip.background$col <- rgb(.0, .2, .6, .2)
 trellis.par.set(theme1)
 
 # Feature plots to look at trends between predictors and the outcome (log_PFS)
-featurePlot(x = training_datA[ ,c(2, 5, 6, 12)],
-            y = training_datA[ ,17],
+featurePlot(x = training_datA[ ,c(1, 4, 5, 11)],
+            y = training_datA[ ,16],
             plot = "scatter",
             span = .5,
             labels = c("Predictors","log_PFS"),
@@ -79,10 +83,6 @@ Correlation plot revealed that certain variables were highly correlated. Chose t
 ctrl1 <- trainControl(method = "cv", number = 10) # set up cv
 set.seed(2) # set seed for reproduction
 
-# remove ID
-training_datA <- training_datA |>  select(-"id")
-testing_datA  <- testing_datA  |> select(-"id")
-
 enet.fit <- train(log_PFS ~ ., 
                   data = training_datA, 
                   method = "glmnet",
@@ -98,21 +98,28 @@ superpose.line = list(col = myCol))
 
 plot(enet.fit, par.settings = myPar, xTrans = log)
 
-# coefficients in the final model
+# Coefficients in the final model
 coef(enet.fit$finalModel, enet.fit$bestTune$lambda)
 ```
 
+Results: Report the model. Interpret the model and assess its performance.
 
 ```{r}
-# predict on testing_datA
+# Predict on testing_datA
 enet.pred <- predict(enet.fit, newdata = testing_datA)
 
 rmse_A <- RMSE(enet.pred, testing_datA$log_PFS)
 r2_A  <- R2(enet.pred,   testing_datA$log_PFS)
 ```
 
-Results: Report the model. Interpret the model and assess its performance.
 ```{r}
+# Create table with the optimal tuning parameters for the chosen model
+opt_para <- enet.fit$bestTune
+rownames(opt_para) <- NULL
+opt_para |> 
+  kable() |>
+  kable_styling(full_width = FALSE)
+
 # Create a table with the model coefficients
 coefs1 <- as.data.frame(as.matrix(coef(enet.fit$finalModel, enet.fit$bestTune$lambda)))
 coefs1$Predictors <- rownames(coefs1)
@@ -120,7 +127,8 @@ colnames(coefs1)[1] <- "Coefficients"
 coefs1 <- coefs1[, c("Predictors", "Coefficients")]
 rownames(coefs1) <- NULL
 coefs1 |>
-  kable()
+  kable() |>
+  kable_styling(full_width = FALSE)
 
 # Create a table with the model coefficients exponentiated
 coefs2 <- as.data.frame(as.matrix(coef(enet.fit$finalModel, enet.fit$bestTune$lambda)))
@@ -133,7 +141,16 @@ coefs2 <- coefs2 |>
 coefs2$`Exponentiated Coefficients`<- exp(coefs2$`Exponentiated Coefficients`)
 rownames(coefs2) <- NULL
 coefs2 |>
-  kable()
+  kable() |>
+  kable_styling(full_width = FALSE)
+
+# Create table with model performance results
+tibble(
+  "RMSE" = rmse_A,
+  "R^2" = r2_A
+) |> 
+  kable() |>
+  kable_styling(full_width = FALSE)
 ```
 
 
@@ -146,26 +163,19 @@ About a decade later, Researcher B conducted a separate study enrolling 2000 bre
 ```{r, warning=FALSE}
 load("data/datB.RData")
 
-# remove id for matrix operations
-datB_clean_eda <- datB |> select(-"id")
-x_B_all <- model.matrix(log_PFS ~ ., datB_clean_eda)[, -1]
-
+# Remove id for matrix operations
+all_datB <- datB |> select(-"id")
 ```
-
 
 ## Evaluate the model's performance on researcher B's dataset
 ```{r}
+# Use all of datB to test generalizability of elastic net model
+enet_pred_B <- predict(enet.fit, newdata = all_datB)
 
-# remove ID
-datB <- datB |>  select(-"id")
+# Compare performances
+rmse_B <- RMSE(enet_pred_B, all_datB$log_PFS)
 
-# use all of datB to test generalizability of elastic net model
-enet_pred_B <- predict(enet.fit, newdata = datB)
-
-# compare performances
-rmse_B <- RMSE(enet_pred_B, datB$log_PFS)
-
-# report table comparing performance
+# Report table comparing performance
 performance_table <- data.frame(
   Dataset = c("datA (Internal Test Set)", "datB (External Validation)"),
   RMSE = c(round(rmse_A, 4), round(rmse_B, 4))
@@ -174,37 +184,39 @@ performance_table <- data.frame(
 colnames(performance_table) <- c("Dataset", "RMSE")
 
 performance_table |>
-  kable(caption = "Elastic Net Model Performance: Internal vs External Validation")
-
+  kable(caption = "Elastic Net Model Performance: Internal vs External Validation") |>
+  kable_styling(full_width = FALSE)
 ```
 
 ## Creation of New Model
 
 ## Import and partition data using 'tidymodels' package
 ```{r}
-
 set.seed(2)
 
 datB_split = initial_split(datB, prop = 0.8)
 
-#extract the training and test data
+# Extract the training and test data
 training_datB = training(datB_split)
 testing_datB = testing(datB_split)
 
-#training data
-x_trainB = model.matrix(log_PFS ~ ., training_datB)[, -1]
+# Training data
+x_trainB = model.matrix(log_PFS ~ . - id, training_datB)[, -1]
 y_trainB = training_datB$log_PFS
 
-#test data
-x_testB  = model.matrix(log_PFS ~ ., testing_datB)[, -1]
+# Test data
+x_testB  = model.matrix(log_PFS ~ . - id, testing_datB)[, -1]
 y_testB = testing_datB$log_PFS
 
+# Remove ID
+training_datB <- training_datB |>  select(-"id")
+testing_datB  <- testing_datB  |> select(-"id")
 ```
 
 ## Exploratory Data Analysis
 ```{r warning=FALSE}
 # Feature plots to look at trends between predictors and the outcome (log_PFS)
-featurePlot(x = training_datB[ ,c(2, 5, 6, 12)],
+featurePlot(x = training_datB[ ,c(1, 4, 5, 11)],
             y = training_datB[ ,16],
             plot = "scatter",
             span = .5,
@@ -239,19 +251,26 @@ superpose.line = list(col = myCol))
 
 plot(enet.test.b, par.settings = myPar, xTrans = log)
 
-# coefficients in the final model
+# Coefficients in the final model
 coef(enet.test.b$finalModel, enet.test.b$bestTune$lambda)
 ```
 
-
 ```{r}
-# predict on testing_datB
+# Predict on testing_datB
 enet.pred.b <- predict(enet.test.b, newdata = testing_datB)
 
 rmse_testB <- RMSE(enet.pred.b, testing_datB$log_PFS)
+r2_testB  <- R2(enet.pred.b, testing_datB$log_PFS)
 ```
 
 ```{r}
+# Create table with the optimal tuning parameters for the chosen model
+opt_para <- enet.test.b$bestTune
+rownames(opt_para) <- NULL
+opt_para |> 
+  kable() |>
+  kable_styling(full_width = FALSE)
+
 # Create a table with the model coefficients
 coefs1 <- as.data.frame(as.matrix(coef(enet.test.b$finalModel, enet.test.b$bestTune$lambda)))
 coefs1$Predictors <- rownames(coefs1)
@@ -259,7 +278,8 @@ colnames(coefs1)[1] <- "Coefficients"
 coefs1 <- coefs1[, c("Predictors", "Coefficients")]
 rownames(coefs1) <- NULL
 coefs1 |>
-  kable()
+  kable() |>
+  kable_styling(full_width = FALSE)
 
 # Create a table with the model coefficients exponentiated
 coefs2 <- as.data.frame(as.matrix(coef(enet.test.b$finalModel, enet.test.b$bestTune$lambda)))
@@ -272,43 +292,52 @@ coefs2 <- coefs2 |>
 coefs2$`Exponentiated Coefficients`<- exp(coefs2$`Exponentiated Coefficients`)
 rownames(coefs2) <- NULL
 coefs2 |>
-  kable()
+  kable() |>
+  kable_styling(full_width = FALSE)
+
+# Create table with model performance results
+tibble(
+  "RMSE" = rmse_testB,
+  "R^2" = r2_testB
+) |> 
+  kable() |>
+  kable_styling(full_width = FALSE)
 ```
 
 ## Compare coefficients from datA & datB model
 ```{r}
-# extract coefficients from both models
+# Extract coefficients from both models
 coefs_A <- as.data.frame(as.matrix(coef(enet.fit$finalModel, enet.fit$bestTune$lambda)))
 coefs_B <- as.data.frame(as.matrix(coef(enet.test.b$finalModel, enet.test.b$bestTune$lambda)))
 
-# rename columns
+# Rename columns
 colnames(coefs_A) <- "Coef_datA"
 colnames(coefs_B) <- "Coef_datB"
 
-# add predictor names
+# Add predictor names
 coefs_A$Predictor <- rownames(coefs_A)
 coefs_B$Predictor <- rownames(coefs_B)
 
-# merge both into one table
+# Merge both into one table
 coef_comparison <- merge(coefs_A, coefs_B, by = "Predictor", all = TRUE)
 
-# add a column showing the difference
+# Add a column showing the difference
 coef_comparison$Difference <- coef_comparison$Coef_datB - coef_comparison$Coef_datA
 
-# round for readability
+# Round for readability
 coef_comparison$Coef_datA <- round(coef_comparison$Coef_datA, 4)
 coef_comparison$Coef_datB <- round(coef_comparison$Coef_datB, 4)
 coef_comparison$Difference <- round(coef_comparison$Difference, 4)
 
-# reorder columns
+# Reorder columns
 coef_comparison <- coef_comparison[, c("Predictor", "Coef_datA", "Coef_datB", "Difference")]
 
-# sort by absolute difference to highlight what changed most
+# Sort by absolute difference to highlight what changed most
 coef_comparison <- coef_comparison[order(abs(coef_comparison$Difference), decreasing = TRUE), ]
 
 rownames(coef_comparison) <- NULL
 
-# display table
+# Display table
 coef_comparison |>
   kable(caption = "Comparison of Elastic Net Coefficients from datA and datB Models",
         col.names = c("Predictor", "datA Coefficient", "datB Coefficient", "Difference")) |>
