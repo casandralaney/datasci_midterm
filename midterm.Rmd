@@ -11,6 +11,7 @@ library(corrplot)
 library(glmnet)
 library(kableExtra)
 library(earth)
+library(dplyr)
 ```
 
 
@@ -26,6 +27,19 @@ Model Training: Provide a detailed description of the model training procedure a
 ## Import and partition data using 'tidymodels' package
 ```{r}
 load("data/datA.RData")
+datA <- datA |>
+  mutate(
+    menopause = as.factor(menopause),
+    race = as.factor(race),
+    tumor_grade = as.factor(tumor_grade),
+    ER = as.factor(ER),
+    PR = as.factor(PR),
+    HER2 = as.factor(HER2),
+    stage = as.factor(stage),
+    surgery = as.factor(surgery),
+    chemo = as.factor(chemo),
+    hormonal_therapy = as.factor(hormonal_therapy)
+  )
 
 set.seed(2)
 
@@ -160,6 +174,20 @@ About a decade later, Researcher B conducted a separate study enrolling 2000 bre
 ## Import dataset and create matrix
 ```{r, warning=FALSE}
 load("data/datB.RData")
+
+datB <- datB |>
+  mutate(
+    menopause = as.factor(menopause),
+    race = as.factor(race),
+    tumor_grade = as.factor(tumor_grade),
+    ER = as.factor(ER),
+    PR = as.factor(PR),
+    HER2 = as.factor(HER2),
+    stage = as.factor(stage),
+    surgery = as.factor(surgery),
+    chemo = as.factor(chemo),
+    hormonal_therapy = as.factor(hormonal_therapy)
+  )
 
 # Remove id for matrix operations
 all_datB <- datB |> select(-"id")
