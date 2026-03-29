@@ -706,27 +706,18 @@ r2_A  &lt;- R2(enet.pred,   testing_datA$log_PFS)</code></pre>
 opt_para &lt;- enet.fit$bestTune
 rownames(opt_para) &lt;- NULL
 opt_para |&gt; 
-  kable() |&gt;
-  kable_styling(full_width = FALSE)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable()</code></pre>
+<table>
 <thead>
-<tr>
-<th style="text-align:right;">
-alpha
-</th>
-<th style="text-align:right;">
-lambda
-</th>
+<tr class="header">
+<th align="right">alpha</th>
+<th align="right">lambda</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0.0131237
-</td>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0.0131237</td>
 </tr>
 </tbody>
 </table>
@@ -737,246 +728,136 @@ colnames(coefs1)[1] &lt;- &quot;Coefficients&quot;
 coefs1 &lt;- coefs1[, c(&quot;Predictors&quot;, &quot;Coefficients&quot;)]
 rownames(coefs1) &lt;- NULL
 coefs1 |&gt;
-  kable() |&gt;
-  kable_styling(full_width = FALSE)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable()</code></pre>
+<table>
 <thead>
-<tr>
-<th style="text-align:left;">
-Predictors
-</th>
-<th style="text-align:right;">
-Coefficients
-</th>
+<tr class="header">
+<th align="left">Predictors</th>
+<th align="right">Coefficients</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:right;">
-2.7754886
-</td>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">2.7754886</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-age
-</td>
-<td style="text-align:right;">
--0.0026492
-</td>
+<tr class="even">
+<td align="left">age</td>
+<td align="right">-0.0026492</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-menopause
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
+<tr class="odd">
+<td align="left">menopause</td>
+<td align="right">0.0000000</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-race
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
+<tr class="even">
+<td align="left">race</td>
+<td align="right">0.0000000</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-bmi
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
+<tr class="odd">
+<td align="left">bmi</td>
+<td align="right">0.0000000</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-tumor_size
-</td>
-<td style="text-align:right;">
--0.0536377
-</td>
+<tr class="even">
+<td align="left">tumor_size</td>
+<td align="right">-0.0536377</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-tumor_grade
-</td>
-<td style="text-align:right;">
--0.0800813
-</td>
+<tr class="odd">
+<td align="left">tumor_grade</td>
+<td align="right">-0.0800813</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-lymph_nodes
-</td>
-<td style="text-align:right;">
--0.0544979
-</td>
+<tr class="even">
+<td align="left">lymph_nodes</td>
+<td align="right">-0.0544979</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-ER
-</td>
-<td style="text-align:right;">
-0.1815444
-</td>
+<tr class="odd">
+<td align="left">ER</td>
+<td align="right">0.1815444</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-PR
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
+<tr class="even">
+<td align="left">PR</td>
+<td align="right">0.0000000</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-HER2
-</td>
-<td style="text-align:right;">
--0.1772971
-</td>
+<tr class="odd">
+<td align="left">HER2</td>
+<td align="right">-0.1772971</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Ki67
-</td>
-<td style="text-align:right;">
--0.0039305
-</td>
+<tr class="even">
+<td align="left">Ki67</td>
+<td align="right">-0.0039305</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-stage
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
+<tr class="odd">
+<td align="left">stage</td>
+<td align="right">0.0000000</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-surgery
-</td>
-<td style="text-align:right;">
--0.0050569
-</td>
+<tr class="even">
+<td align="left">surgery</td>
+<td align="right">-0.0050569</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-chemo
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
+<tr class="odd">
+<td align="left">chemo</td>
+<td align="right">0.0000000</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-hormonal_therapy
-</td>
-<td style="text-align:right;">
-0.1604513
-</td>
+<tr class="even">
+<td align="left">hormonal_therapy</td>
+<td align="right">0.1604513</td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code># Create a table with the model coefficients exponentiated
+<pre class="r"><code># Create a table with the interpretable output
 coefs2 &lt;- as.data.frame(as.matrix(coef(enet.fit$finalModel, enet.fit$bestTune$lambda)))
 coefs2$Predictors &lt;- rownames(coefs2)
-colnames(coefs2)[1] &lt;- &quot;Exponentiated Coefficients&quot;
-coefs2 &lt;- coefs2[, c(&quot;Predictors&quot;, &quot;Exponentiated Coefficients&quot;)]
+colnames(coefs2)[1] &lt;- &quot;Percent Change in PFS&quot;
+coefs2 &lt;- coefs2[, c(&quot;Predictors&quot;, &quot;Percent Change in PFS&quot;)]
 coefs2 &lt;- coefs2 |&gt;
   filter(Predictors %in% c(&quot;(Intercept)&quot;, &quot;age&quot;, &quot;tumor_size&quot;, &quot;tumor_grade&quot;, &quot;lymph_nodes&quot;, 
                            &quot;ER&quot;, &quot;HER2&quot;, &quot;Ki67&quot;, &quot;hormonal_therapy&quot;))
-coefs2$`Exponentiated Coefficients`&lt;- exp(coefs2$`Exponentiated Coefficients`)
+coefs2$`Percent Change in PFS`&lt;- (exp(coefs2$`Percent Change in PFS`)-1)*100
 rownames(coefs2) &lt;- NULL
 coefs2 |&gt;
-  kable() |&gt;
-  kable_styling(full_width = FALSE)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable()</code></pre>
+<table>
 <thead>
-<tr>
-<th style="text-align:left;">
-Predictors
-</th>
-<th style="text-align:right;">
-Exponentiated Coefficients
-</th>
+<tr class="header">
+<th align="left">Predictors</th>
+<th align="right">Percent Change in PFS</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:right;">
-16.0464652
-</td>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">1504.6465159</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-age
-</td>
-<td style="text-align:right;">
-0.9973543
-</td>
+<tr class="even">
+<td align="left">age</td>
+<td align="right">-0.2645662</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-tumor_size
-</td>
-<td style="text-align:right;">
-0.9477754
-</td>
+<tr class="odd">
+<td align="left">tumor_size</td>
+<td align="right">-5.2224587</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-tumor_grade
-</td>
-<td style="text-align:right;">
-0.9230413
-</td>
+<tr class="even">
+<td align="left">tumor_grade</td>
+<td align="right">-7.6958725</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-lymph_nodes
-</td>
-<td style="text-align:right;">
-0.9469605
-</td>
+<tr class="odd">
+<td align="left">lymph_nodes</td>
+<td align="right">-5.3039465</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-ER
-</td>
-<td style="text-align:right;">
-1.1990678
-</td>
+<tr class="even">
+<td align="left">ER</td>
+<td align="right">19.9067762</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-HER2
-</td>
-<td style="text-align:right;">
-0.8375309
-</td>
+<tr class="odd">
+<td align="left">HER2</td>
+<td align="right">-16.2469101</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Ki67
-</td>
-<td style="text-align:right;">
-0.9960772
-</td>
+<tr class="even">
+<td align="left">Ki67</td>
+<td align="right">-0.3922795</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-hormonal_therapy
-</td>
-<td style="text-align:right;">
-1.1740406
-</td>
+<tr class="odd">
+<td align="left">hormonal_therapy</td>
+<td align="right">17.4040569</td>
 </tr>
 </tbody>
 </table>
@@ -985,27 +866,18 @@ tibble(
   &quot;RMSE&quot; = rmse_A,
   &quot;R^2&quot; = r2_A
 ) |&gt; 
-  kable() |&gt;
-  kable_styling(full_width = FALSE)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable()</code></pre>
+<table>
 <thead>
-<tr>
-<th style="text-align:right;">
-RMSE
-</th>
-<th style="text-align:right;">
-R^2
-</th>
+<tr class="header">
+<th align="right">RMSE</th>
+<th align="right">R^2</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:right;">
-0.7470232
-</td>
-<td style="text-align:right;">
-0.1674833
-</td>
+<tr class="odd">
+<td align="right">0.7470232</td>
+<td align="right">0.1674833</td>
 </tr>
 </tbody>
 </table>
@@ -1176,27 +1048,18 @@ r2_testB  &lt;- R2(enet.pred.b, testing_datB$log_PFS)</code></pre>
 opt_para &lt;- enet.test.b$bestTune
 rownames(opt_para) &lt;- NULL
 opt_para |&gt; 
-  kable() |&gt;
-  kable_styling(full_width = FALSE)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable()</code></pre>
+<table>
 <thead>
-<tr>
-<th style="text-align:right;">
-alpha
-</th>
-<th style="text-align:right;">
-lambda
-</th>
+<tr class="header">
+<th align="right">alpha</th>
+<th align="right">lambda</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:right;">
-0.15
-</td>
-<td style="text-align:right;">
-0.0306584
-</td>
+<tr class="odd">
+<td align="right">0.15</td>
+<td align="right">0.0306584</td>
 </tr>
 </tbody>
 </table>
@@ -1207,246 +1070,156 @@ colnames(coefs1)[1] &lt;- &quot;Coefficients&quot;
 coefs1 &lt;- coefs1[, c(&quot;Predictors&quot;, &quot;Coefficients&quot;)]
 rownames(coefs1) &lt;- NULL
 coefs1 |&gt;
-  kable() |&gt;
-  kable_styling(full_width = FALSE)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable()</code></pre>
+<table>
 <thead>
-<tr>
-<th style="text-align:left;">
-Predictors
-</th>
-<th style="text-align:right;">
-Coefficients
-</th>
+<tr class="header">
+<th align="left">Predictors</th>
+<th align="right">Coefficients</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:right;">
-3.1220842
-</td>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">3.1220842</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-age
-</td>
-<td style="text-align:right;">
--0.0028521
-</td>
+<tr class="even">
+<td align="left">age</td>
+<td align="right">-0.0028521</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-menopause
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
+<tr class="odd">
+<td align="left">menopause</td>
+<td align="right">0.0000000</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-race
-</td>
-<td style="text-align:right;">
-0.0157697
-</td>
+<tr class="even">
+<td align="left">race</td>
+<td align="right">0.0157697</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-bmi
-</td>
-<td style="text-align:right;">
--0.0012047
-</td>
+<tr class="odd">
+<td align="left">bmi</td>
+<td align="right">-0.0012047</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-tumor_size
-</td>
-<td style="text-align:right;">
--0.0630348
-</td>
+<tr class="even">
+<td align="left">tumor_size</td>
+<td align="right">-0.0630348</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-tumor_grade
-</td>
-<td style="text-align:right;">
--0.0507811
-</td>
+<tr class="odd">
+<td align="left">tumor_grade</td>
+<td align="right">-0.0507811</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-lymph_nodes
-</td>
-<td style="text-align:right;">
--0.0184106
-</td>
+<tr class="even">
+<td align="left">lymph_nodes</td>
+<td align="right">-0.0184106</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-ER
-</td>
-<td style="text-align:right;">
-0.1590056
-</td>
+<tr class="odd">
+<td align="left">ER</td>
+<td align="right">0.1590056</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-PR
-</td>
-<td style="text-align:right;">
-0.0943830
-</td>
+<tr class="even">
+<td align="left">PR</td>
+<td align="right">0.0943830</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-HER2
-</td>
-<td style="text-align:right;">
-0.0310957
-</td>
+<tr class="odd">
+<td align="left">HER2</td>
+<td align="right">0.0310957</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Ki67
-</td>
-<td style="text-align:right;">
--0.0057729
-</td>
+<tr class="even">
+<td align="left">Ki67</td>
+<td align="right">-0.0057729</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-stage
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
+<tr class="odd">
+<td align="left">stage</td>
+<td align="right">0.0000000</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-surgery
-</td>
-<td style="text-align:right;">
--0.0172947
-</td>
+<tr class="even">
+<td align="left">surgery</td>
+<td align="right">-0.0172947</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-chemo
-</td>
-<td style="text-align:right;">
--0.0311109
-</td>
+<tr class="odd">
+<td align="left">chemo</td>
+<td align="right">-0.0311109</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-hormonal_therapy
-</td>
-<td style="text-align:right;">
-0.1905443
-</td>
+<tr class="even">
+<td align="left">hormonal_therapy</td>
+<td align="right">0.1905443</td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code># Create a table with the model coefficients exponentiated
+<pre class="r"><code># Create a table with the interpretable output
 coefs2 &lt;- as.data.frame(as.matrix(coef(enet.test.b$finalModel, enet.test.b$bestTune$lambda)))
 coefs2$Predictors &lt;- rownames(coefs2)
-colnames(coefs2)[1] &lt;- &quot;Exponentiated Coefficients&quot;
-coefs2 &lt;- coefs2[, c(&quot;Predictors&quot;, &quot;Exponentiated Coefficients&quot;)]
+colnames(coefs2)[1] &lt;- &quot;Percent Change in PFS&quot;
+coefs2 &lt;- coefs2[, c(&quot;Predictors&quot;, &quot;Percent Change in PFS&quot;)]
 coefs2 &lt;- coefs2 |&gt;
-  filter(Predictors %in% c(&quot;(Intercept)&quot;, &quot;age&quot;, &quot;tumor_size&quot;, &quot;tumor_grade&quot;, &quot;lymph_nodes&quot;, 
-                           &quot;ER&quot;, &quot;HER2&quot;, &quot;Ki67&quot;, &quot;hormonal_therapy&quot;))
-coefs2$`Exponentiated Coefficients`&lt;- exp(coefs2$`Exponentiated Coefficients`)
+  filter(Predictors %in% c(&quot;(Intercept)&quot;, &quot;age&quot;, &quot;race&quot;, &quot;bmi&quot;, &quot;tumor_size&quot;, &quot;tumor_grade&quot;, &quot;lymph_nodes&quot;, 
+                           &quot;ER&quot;, &quot;PR&quot;, &quot;HER2&quot;, &quot;Ki67&quot;, &quot;surgery&quot;, &quot;chemo&quot;, &quot;hormonal_therapy&quot;))
+coefs2$`Percent Change in PFS`&lt;- (exp(coefs2$`Percent Change in PFS`)-1)*100
 rownames(coefs2) &lt;- NULL
 coefs2 |&gt;
-  kable() |&gt;
-  kable_styling(full_width = FALSE)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable() </code></pre>
+<table>
 <thead>
-<tr>
-<th style="text-align:left;">
-Predictors
-</th>
-<th style="text-align:right;">
-Exponentiated Coefficients
-</th>
+<tr class="header">
+<th align="left">Predictors</th>
+<th align="right">Percent Change in PFS</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:right;">
-22.6936290
-</td>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">2169.3628990</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-age
-</td>
-<td style="text-align:right;">
-0.9971519
-</td>
+<tr class="even">
+<td align="left">age</td>
+<td align="right">-0.2848085</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-tumor_size
-</td>
-<td style="text-align:right;">
-0.9389108
-</td>
+<tr class="odd">
+<td align="left">race</td>
+<td align="right">1.5894729</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-tumor_grade
-</td>
-<td style="text-align:right;">
-0.9504867
-</td>
+<tr class="even">
+<td align="left">bmi</td>
+<td align="right">-0.1204023</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-lymph_nodes
-</td>
-<td style="text-align:right;">
-0.9817578
-</td>
+<tr class="odd">
+<td align="left">tumor_size</td>
+<td align="right">-6.1089216</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-ER
-</td>
-<td style="text-align:right;">
-1.1723445
-</td>
+<tr class="even">
+<td align="left">tumor_grade</td>
+<td align="right">-4.9513301</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-HER2
-</td>
-<td style="text-align:right;">
-1.0315843
-</td>
+<tr class="odd">
+<td align="left">lymph_nodes</td>
+<td align="right">-1.8242190</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Ki67
-</td>
-<td style="text-align:right;">
-0.9942437
-</td>
+<tr class="even">
+<td align="left">ER</td>
+<td align="right">17.2344536</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-hormonal_therapy
-</td>
-<td style="text-align:right;">
-1.2099079
-</td>
+<tr class="odd">
+<td align="left">PR</td>
+<td align="right">9.8980558</td>
+</tr>
+<tr class="even">
+<td align="left">HER2</td>
+<td align="right">3.1584251</td>
+</tr>
+<tr class="odd">
+<td align="left">Ki67</td>
+<td align="right">-0.5756273</td>
+</tr>
+<tr class="even">
+<td align="left">surgery</td>
+<td align="right">-1.7146010</td>
+</tr>
+<tr class="odd">
+<td align="left">chemo</td>
+<td align="right">-3.0631909</td>
+</tr>
+<tr class="even">
+<td align="left">hormonal_therapy</td>
+<td align="right">20.9907935</td>
 </tr>
 </tbody>
 </table>
@@ -1455,27 +1228,18 @@ tibble(
   &quot;RMSE&quot; = rmse_testB,
   &quot;R^2&quot; = r2_testB
 ) |&gt; 
-  kable() |&gt;
-  kable_styling(full_width = FALSE)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable()</code></pre>
+<table>
 <thead>
-<tr>
-<th style="text-align:right;">
-RMSE
-</th>
-<th style="text-align:right;">
-R^2
-</th>
+<tr class="header">
+<th align="right">RMSE</th>
+<th align="right">R^2</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:right;">
-0.6572825
-</td>
-<td style="text-align:right;">
-0.1611754
-</td>
+<tr class="odd">
+<td align="right">0.6572825</td>
+<td align="right">0.1611754</td>
 </tr>
 </tbody>
 </table>
@@ -1516,267 +1280,123 @@ rownames(coef_comparison) &lt;- NULL
 # Display table
 coef_comparison |&gt;
   kable(caption = &quot;Comparison of Elastic Net Coefficients from datA and datB Models&quot;,
-        col.names = c(&quot;Predictor&quot;, &quot;datA Coefficient&quot;, &quot;datB Coefficient&quot;, &quot;Difference&quot;)) |&gt;
-  kable_styling(full_width = FALSE) |&gt;
+        col.names = c(&quot;Predictor&quot;, &quot;datA Coefficient&quot;, &quot;datB Coefficient&quot;, &quot;Difference&quot;)) |&gt; 
   add_footnote(&quot;Coefficients are on the log-PFS scale, Difference = datB minus datA. 
                 Variables with zero coefficients were excluded by elastic net regularization.&quot;,
                notation = &quot;none&quot;)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>
-Comparison of Elastic Net Coefficients from datA and datB Models
-</caption>
+<table>
+<caption>Comparison of Elastic Net Coefficients from datA and datB
+Models</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-Predictor
-</th>
-<th style="text-align:right;">
-datA Coefficient
-</th>
-<th style="text-align:right;">
-datB Coefficient
-</th>
-<th style="text-align:right;">
-Difference
-</th>
+<tr class="header">
+<th align="left">Predictor</th>
+<th align="right">datA Coefficient</th>
+<th align="right">datB Coefficient</th>
+<th align="right">Difference</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:right;">
-2.7755
-</td>
-<td style="text-align:right;">
-3.1221
-</td>
-<td style="text-align:right;">
-0.3466
-</td>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">2.7755</td>
+<td align="right">3.1221</td>
+<td align="right">0.3466</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-HER2
-</td>
-<td style="text-align:right;">
--0.1773
-</td>
-<td style="text-align:right;">
-0.0311
-</td>
-<td style="text-align:right;">
-0.2084
-</td>
+<tr class="even">
+<td align="left">HER2</td>
+<td align="right">-0.1773</td>
+<td align="right">0.0311</td>
+<td align="right">0.2084</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-PR
-</td>
-<td style="text-align:right;">
-0.0000
-</td>
-<td style="text-align:right;">
-0.0944
-</td>
-<td style="text-align:right;">
-0.0944
-</td>
+<tr class="odd">
+<td align="left">PR</td>
+<td align="right">0.0000</td>
+<td align="right">0.0944</td>
+<td align="right">0.0944</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-lymph_nodes
-</td>
-<td style="text-align:right;">
--0.0545
-</td>
-<td style="text-align:right;">
--0.0184
-</td>
-<td style="text-align:right;">
-0.0361
-</td>
+<tr class="even">
+<td align="left">lymph_nodes</td>
+<td align="right">-0.0545</td>
+<td align="right">-0.0184</td>
+<td align="right">0.0361</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-chemo
-</td>
-<td style="text-align:right;">
-0.0000
-</td>
-<td style="text-align:right;">
--0.0311
-</td>
-<td style="text-align:right;">
--0.0311
-</td>
+<tr class="odd">
+<td align="left">chemo</td>
+<td align="right">0.0000</td>
+<td align="right">-0.0311</td>
+<td align="right">-0.0311</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-hormonal_therapy
-</td>
-<td style="text-align:right;">
-0.1605
-</td>
-<td style="text-align:right;">
-0.1905
-</td>
-<td style="text-align:right;">
-0.0301
-</td>
+<tr class="even">
+<td align="left">hormonal_therapy</td>
+<td align="right">0.1605</td>
+<td align="right">0.1905</td>
+<td align="right">0.0301</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-tumor_grade
-</td>
-<td style="text-align:right;">
--0.0801
-</td>
-<td style="text-align:right;">
--0.0508
-</td>
-<td style="text-align:right;">
-0.0293
-</td>
+<tr class="odd">
+<td align="left">tumor_grade</td>
+<td align="right">-0.0801</td>
+<td align="right">-0.0508</td>
+<td align="right">0.0293</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-ER
-</td>
-<td style="text-align:right;">
-0.1815
-</td>
-<td style="text-align:right;">
-0.1590
-</td>
-<td style="text-align:right;">
--0.0225
-</td>
+<tr class="even">
+<td align="left">ER</td>
+<td align="right">0.1815</td>
+<td align="right">0.1590</td>
+<td align="right">-0.0225</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-race
-</td>
-<td style="text-align:right;">
-0.0000
-</td>
-<td style="text-align:right;">
-0.0158
-</td>
-<td style="text-align:right;">
-0.0158
-</td>
+<tr class="odd">
+<td align="left">race</td>
+<td align="right">0.0000</td>
+<td align="right">0.0158</td>
+<td align="right">0.0158</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-surgery
-</td>
-<td style="text-align:right;">
--0.0051
-</td>
-<td style="text-align:right;">
--0.0173
-</td>
-<td style="text-align:right;">
--0.0122
-</td>
+<tr class="even">
+<td align="left">surgery</td>
+<td align="right">-0.0051</td>
+<td align="right">-0.0173</td>
+<td align="right">-0.0122</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-tumor_size
-</td>
-<td style="text-align:right;">
--0.0536
-</td>
-<td style="text-align:right;">
--0.0630
-</td>
-<td style="text-align:right;">
--0.0094
-</td>
+<tr class="odd">
+<td align="left">tumor_size</td>
+<td align="right">-0.0536</td>
+<td align="right">-0.0630</td>
+<td align="right">-0.0094</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Ki67
-</td>
-<td style="text-align:right;">
--0.0039
-</td>
-<td style="text-align:right;">
--0.0058
-</td>
-<td style="text-align:right;">
--0.0018
-</td>
+<tr class="even">
+<td align="left">Ki67</td>
+<td align="right">-0.0039</td>
+<td align="right">-0.0058</td>
+<td align="right">-0.0018</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-bmi
-</td>
-<td style="text-align:right;">
-0.0000
-</td>
-<td style="text-align:right;">
--0.0012
-</td>
-<td style="text-align:right;">
--0.0012
-</td>
+<tr class="odd">
+<td align="left">bmi</td>
+<td align="right">0.0000</td>
+<td align="right">-0.0012</td>
+<td align="right">-0.0012</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-age
-</td>
-<td style="text-align:right;">
--0.0026
-</td>
-<td style="text-align:right;">
--0.0029
-</td>
-<td style="text-align:right;">
--0.0002
-</td>
+<tr class="even">
+<td align="left">age</td>
+<td align="right">-0.0026</td>
+<td align="right">-0.0029</td>
+<td align="right">-0.0002</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-menopause
-</td>
-<td style="text-align:right;">
-0.0000
-</td>
-<td style="text-align:right;">
-0.0000
-</td>
-<td style="text-align:right;">
-0.0000
-</td>
+<tr class="odd">
+<td align="left">menopause</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-stage
-</td>
-<td style="text-align:right;">
-0.0000
-</td>
-<td style="text-align:right;">
-0.0000
-</td>
-<td style="text-align:right;">
-0.0000
-</td>
+<tr class="even">
+<td align="left">stage</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000</td>
 </tr>
 </tbody>
-<tfoot>
-<tr>
-<td style="padding: 0; border:0;" colspan="100%">
-<sup></sup> Coefficients are on the log-PFS scale, Difference = datB
-minus datA. <br /> Variables with zero coefficients were excluded by
-elastic net regularization.
-</td>
-</tr>
-</tfoot>
 </table>
+<p><strong>Note:</strong> Coefficients are on the log-PFS scale,
+Difference = datB minus datA. Variables with zero coefficients were
+excluded by elastic net regularization.</p>
 </div>
 </div>
 
