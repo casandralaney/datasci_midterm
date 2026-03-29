@@ -1,6 +1,6 @@
 ---
 title: "Midterm Project- R Code and Outputs"
-output: html_document
+output: pdf_document
 ---
 
 ## Load in neccessary packages
@@ -118,8 +118,7 @@ r2_A  <- R2(enet.pred,   testing_datA$log_PFS)
 opt_para <- enet.fit$bestTune
 rownames(opt_para) <- NULL
 opt_para |> 
-  kable() |>
-  kable_styling(full_width = FALSE)
+  kable()
 
 # Create a table with the model coefficients
 coefs1 <- as.data.frame(as.matrix(coef(enet.fit$finalModel, enet.fit$bestTune$lambda)))
@@ -128,8 +127,7 @@ colnames(coefs1)[1] <- "Coefficients"
 coefs1 <- coefs1[, c("Predictors", "Coefficients")]
 rownames(coefs1) <- NULL
 coefs1 |>
-  kable() |>
-  kable_styling(full_width = FALSE)
+  kable()
 
 # Create a table with the model coefficients exponentiated
 coefs2 <- as.data.frame(as.matrix(coef(enet.fit$finalModel, enet.fit$bestTune$lambda)))
@@ -142,16 +140,14 @@ coefs2 <- coefs2 |>
 coefs2$`Exponentiated Coefficients`<- exp(coefs2$`Exponentiated Coefficients`)
 rownames(coefs2) <- NULL
 coefs2 |>
-  kable() |>
-  kable_styling(full_width = FALSE)
+  kable()
 
 # Create table with model performance results
 tibble(
   "RMSE" = rmse_A,
   "R^2" = r2_A
 ) |> 
-  kable() |>
-  kable_styling(full_width = FALSE)
+  kable()
 ```
 
 
@@ -269,8 +265,7 @@ r2_testB  <- R2(enet.pred.b, testing_datB$log_PFS)
 opt_para <- enet.test.b$bestTune
 rownames(opt_para) <- NULL
 opt_para |> 
-  kable() |>
-  kable_styling(full_width = FALSE)
+  kable()
 
 # Create a table with the model coefficients
 coefs1 <- as.data.frame(as.matrix(coef(enet.test.b$finalModel, enet.test.b$bestTune$lambda)))
@@ -279,8 +274,7 @@ colnames(coefs1)[1] <- "Coefficients"
 coefs1 <- coefs1[, c("Predictors", "Coefficients")]
 rownames(coefs1) <- NULL
 coefs1 |>
-  kable() |>
-  kable_styling(full_width = FALSE)
+  kable()
 
 # Create a table with the model coefficients exponentiated
 coefs2 <- as.data.frame(as.matrix(coef(enet.test.b$finalModel, enet.test.b$bestTune$lambda)))
@@ -293,16 +287,14 @@ coefs2 <- coefs2 |>
 coefs2$`Exponentiated Coefficients`<- exp(coefs2$`Exponentiated Coefficients`)
 rownames(coefs2) <- NULL
 coefs2 |>
-  kable() |>
-  kable_styling(full_width = FALSE)
+  kable() 
 
 # Create table with model performance results
 tibble(
   "RMSE" = rmse_testB,
   "R^2" = r2_testB
 ) |> 
-  kable() |>
-  kable_styling(full_width = FALSE)
+  kable()
 ```
 
 ## Compare coefficients from datA & datB model
@@ -341,8 +333,7 @@ rownames(coef_comparison) <- NULL
 # Display table
 coef_comparison |>
   kable(caption = "Comparison of Elastic Net Coefficients from datA and datB Models",
-        col.names = c("Predictor", "datA Coefficient", "datB Coefficient", "Difference")) |>
-  kable_styling(full_width = FALSE) |>
+        col.names = c("Predictor", "datA Coefficient", "datB Coefficient", "Difference")) |> 
   add_footnote("Coefficients are on the log-PFS scale, Difference = datB minus datA. 
                 Variables with zero coefficients were excluded by elastic net regularization.",
                notation = "none")
