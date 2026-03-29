@@ -1,6 +1,6 @@
 ---
 title: "Midterm Project- R Code and Outputs"
-output: html_document
+output: pdf_document
 ---
 
 ## Load in neccessary packages
