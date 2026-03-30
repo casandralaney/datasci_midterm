@@ -1,0 +1,911 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Midterm Project- R Code and Outputs},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Midterm Project- R Code and Outputs}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\subsection{Load in neccessary
+packages}\label{load-in-neccessary-packages}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidymodels)}
+\FunctionTok{library}\NormalTok{(caret)}
+\FunctionTok{library}\NormalTok{(corrplot)}
+\FunctionTok{library}\NormalTok{(glmnet)}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\FunctionTok{library}\NormalTok{(earth)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Part I}\label{part-i}
+
+Using this dataset, please help Researcher A build a prediction model
+for PFS, aiming to understand how demographic, tumor, and treatment
+characteristics influence progression-free survival in breast cancer
+patients.
+
+To answer this question, your report should at least include the
+following:
+
+Model Training: Provide a detailed description of the model training
+procedure and how you obtained the model. Your description should
+include sufficient detail so that another statistician can reproduce the
+same model. Points will be deducted if the details provided are
+insufficient to reproduce your results.
+
+\subsection{Import and partition data using `tidymodels'
+package}\label{import-and-partition-data-using-tidymodels-package}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{load}\NormalTok{(}\StringTok{"data/datA.RData"}\NormalTok{)}
+\NormalTok{datA }\OtherTok{\textless{}{-}}\NormalTok{ datA }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{menopause =} \FunctionTok{as.factor}\NormalTok{(menopause),}
+    \AttributeTok{race =} \FunctionTok{as.factor}\NormalTok{(race),}
+    \AttributeTok{tumor\_grade =} \FunctionTok{as.factor}\NormalTok{(tumor\_grade),}
+    \AttributeTok{ER =} \FunctionTok{as.factor}\NormalTok{(ER),}
+    \AttributeTok{PR =} \FunctionTok{as.factor}\NormalTok{(PR),}
+    \AttributeTok{HER2 =} \FunctionTok{as.factor}\NormalTok{(HER2),}
+    \AttributeTok{stage =} \FunctionTok{as.factor}\NormalTok{(stage),}
+    \AttributeTok{surgery =} \FunctionTok{as.factor}\NormalTok{(surgery),}
+    \AttributeTok{chemo =} \FunctionTok{as.factor}\NormalTok{(chemo),}
+    \AttributeTok{hormonal\_therapy =} \FunctionTok{as.factor}\NormalTok{(hormonal\_therapy)}
+\NormalTok{  )}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+
+\NormalTok{datA\_split }\OtherTok{=} \FunctionTok{initial\_split}\NormalTok{(datA, }\AttributeTok{prop =} \FloatTok{0.8}\NormalTok{)}
+
+\CommentTok{\# Extract the training and test data}
+\NormalTok{training\_datA }\OtherTok{=} \FunctionTok{training}\NormalTok{(datA\_split)}
+\NormalTok{testing\_datA }\OtherTok{=} \FunctionTok{testing}\NormalTok{(datA\_split)}
+
+\CommentTok{\# Training data}
+\NormalTok{x\_trainA }\OtherTok{=} \FunctionTok{model.matrix}\NormalTok{(log\_PFS }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\NormalTok{ id, training\_datA)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{y\_trainA }\OtherTok{=}\NormalTok{ training\_datA}\SpecialCharTok{$}\NormalTok{log\_PFS}
+
+\CommentTok{\# Test data}
+\NormalTok{x\_testA }\OtherTok{=} \FunctionTok{model.matrix}\NormalTok{(log\_PFS }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\NormalTok{ id, testing\_datA)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{y\_testA }\OtherTok{=}\NormalTok{ testing\_datA}\SpecialCharTok{$}\NormalTok{log\_PFS}
+
+\CommentTok{\# Remove ID}
+\NormalTok{training\_datA }\OtherTok{\textless{}{-}}\NormalTok{ training\_datA }\SpecialCharTok{|\textgreater{}}  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{"id"}\NormalTok{)}
+\NormalTok{testing\_datA  }\OtherTok{\textless{}{-}}\NormalTok{ testing\_datA  }\SpecialCharTok{|\textgreater{}} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{"id"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Exploratory Data Analysis}\label{exploratory-data-analysis}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Changing the plot display}
+\NormalTok{theme1 }\OtherTok{\textless{}{-}} \FunctionTok{trellis.par.get}\NormalTok{()}
+\NormalTok{theme1}\SpecialCharTok{$}\NormalTok{plot.symbol}\SpecialCharTok{$}\NormalTok{col }\OtherTok{\textless{}{-}} \FunctionTok{rgb}\NormalTok{(.}\DecValTok{2}\NormalTok{, .}\DecValTok{4}\NormalTok{, .}\DecValTok{2}\NormalTok{, .}\DecValTok{5}\NormalTok{)}
+\NormalTok{theme1}\SpecialCharTok{$}\NormalTok{plot.symbol}\SpecialCharTok{$}\NormalTok{pch }\OtherTok{\textless{}{-}} \DecValTok{16}
+\NormalTok{theme1}\SpecialCharTok{$}\NormalTok{plot.line}\SpecialCharTok{$}\NormalTok{col }\OtherTok{\textless{}{-}} \FunctionTok{rgb}\NormalTok{(.}\DecValTok{8}\NormalTok{, .}\DecValTok{1}\NormalTok{, .}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{theme1}\SpecialCharTok{$}\NormalTok{plot.line}\SpecialCharTok{$}\NormalTok{lwd }\OtherTok{\textless{}{-}} \DecValTok{2}
+\NormalTok{theme1}\SpecialCharTok{$}\NormalTok{strip.background}\SpecialCharTok{$}\NormalTok{col }\OtherTok{\textless{}{-}} \FunctionTok{rgb}\NormalTok{(.}\DecValTok{0}\NormalTok{, .}\DecValTok{2}\NormalTok{, .}\DecValTok{6}\NormalTok{, .}\DecValTok{2}\NormalTok{)}
+\FunctionTok{trellis.par.set}\NormalTok{(theme1)}
+
+\CommentTok{\# Feature plots to look at trends between predictors and the outcome (log\_PFS)}
+\FunctionTok{featurePlot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ training\_datA[ ,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{11}\NormalTok{)],}
+            \AttributeTok{y =}\NormalTok{ training\_datA[ ,}\DecValTok{16}\NormalTok{],}
+            \AttributeTok{plot =} \StringTok{"scatter"}\NormalTok{,}
+            \AttributeTok{span =}\NormalTok{ .}\DecValTok{5}\NormalTok{,}
+            \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Predictors"}\NormalTok{,}\StringTok{"log\_PFS"}\NormalTok{),}
+            \AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{"p"}\NormalTok{, }\StringTok{"smooth"}\NormalTok{),}
+            \AttributeTok{layout =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{midterm_files/figure-latex/unnamed-chunk-3-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculates the correlation matrix for all the predictors}
+\FunctionTok{corrplot}\NormalTok{(}\FunctionTok{cor}\NormalTok{(x\_trainA), }\AttributeTok{method =} \StringTok{"circle"}\NormalTok{, }\AttributeTok{type =} \StringTok{"full"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{midterm_files/figure-latex/unnamed-chunk-3-2.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Elastic Net}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{ctrl1 }\OtherTok{\textless{}{-}} \FunctionTok{trainControl}\NormalTok{(}\AttributeTok{method =} \StringTok{"cv"}\NormalTok{, }\AttributeTok{number =} \DecValTok{10}\NormalTok{) }\CommentTok{\# set up cv}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{\# set seed for reproduction}
+
+\NormalTok{enet.fit }\OtherTok{\textless{}{-}} \FunctionTok{train}\NormalTok{(log\_PFS }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }
+                  \AttributeTok{data =}\NormalTok{ training\_datA, }
+                  \AttributeTok{method =} \StringTok{"glmnet"}\NormalTok{,}
+                  \AttributeTok{tuneGrid =} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{alpha =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length =} \DecValTok{21}\NormalTok{),}
+                                         \AttributeTok{lambda =} \FunctionTok{exp}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{7}\NormalTok{, }\AttributeTok{length =} \DecValTok{100}\NormalTok{))),}
+                  \AttributeTok{trControl =}\NormalTok{ ctrl1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo,
+## : There were missing values in resampled performance measures.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{enet.fit}\SpecialCharTok{$}\NormalTok{bestTune}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      alpha     lambda
+## 2047     1 0.01481491
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myCol }\OtherTok{\textless{}{-}} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{25}\NormalTok{)}
+\NormalTok{myPar }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{superpose.symbol =} \FunctionTok{list}\NormalTok{(}\AttributeTok{col =}\NormalTok{ myCol),}
+\AttributeTok{superpose.line =} \FunctionTok{list}\NormalTok{(}\AttributeTok{col =}\NormalTok{ myCol))}
+
+\FunctionTok{plot}\NormalTok{(enet.fit, }\AttributeTok{par.settings =}\NormalTok{ myPar, }\AttributeTok{xTrans =}\NormalTok{ log)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{midterm_files/figure-latex/unnamed-chunk-4-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Coefficients in the final model}
+\FunctionTok{coef}\NormalTok{(enet.fit}\SpecialCharTok{$}\NormalTok{finalModel, enet.fit}\SpecialCharTok{$}\NormalTok{bestTune}\SpecialCharTok{$}\NormalTok{lambda)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 20 x 1 sparse Matrix of class "dgCMatrix"
+##                    s=0.01481491
+## (Intercept)        2.6596549020
+## age               -0.0025719864
+## menopause1         .           
+## race2              .           
+## race3              0.0108623481
+## race4             -0.0244504922
+## bmi                .           
+## tumor_size        -0.0545380491
+## tumor_grade2       .           
+## tumor_grade3      -0.1057179919
+## lymph_nodes       -0.0540172355
+## ER1                0.1709296973
+## PR1                .           
+## HER21             -0.1732033529
+## Ki67              -0.0046400332
+## stage2             .           
+## stage3             .           
+## surgery1          -0.0009660964
+## chemo1             .           
+## hormonal_therapy1  0.1589522549
+\end{verbatim}
+
+Results: Report the model. Interpret the model and assess its
+performance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Predict on testing\_datA}
+\NormalTok{enet.pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(enet.fit, }\AttributeTok{newdata =}\NormalTok{ testing\_datA)}
+
+\NormalTok{rmse\_A }\OtherTok{\textless{}{-}} \FunctionTok{RMSE}\NormalTok{(enet.pred, testing\_datA}\SpecialCharTok{$}\NormalTok{log\_PFS)}
+\NormalTok{r2\_A  }\OtherTok{\textless{}{-}} \FunctionTok{R2}\NormalTok{(enet.pred,   testing\_datA}\SpecialCharTok{$}\NormalTok{log\_PFS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create table with the optimal tuning parameters for the chosen model}
+\NormalTok{opt\_para }\OtherTok{\textless{}{-}}\NormalTok{ enet.fit}\SpecialCharTok{$}\NormalTok{bestTune}
+\FunctionTok{rownames}\NormalTok{(opt\_para) }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{opt\_para }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{kable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rr@{}}
+\toprule\noalign{}
+alpha & lambda \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & 0.0148149 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a table with the model coefficients}
+\NormalTok{coefs1 }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{coef}\NormalTok{(enet.fit}\SpecialCharTok{$}\NormalTok{finalModel, enet.fit}\SpecialCharTok{$}\NormalTok{bestTune}\SpecialCharTok{$}\NormalTok{lambda)))}
+\NormalTok{coefs1}\SpecialCharTok{$}\NormalTok{Predictors }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(coefs1)}
+\FunctionTok{colnames}\NormalTok{(coefs1)[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Coefficients"}
+\NormalTok{coefs1 }\OtherTok{\textless{}{-}}\NormalTok{ coefs1[, }\FunctionTok{c}\NormalTok{(}\StringTok{"Predictors"}\NormalTok{, }\StringTok{"Coefficients"}\NormalTok{)]}
+\FunctionTok{rownames}\NormalTok{(coefs1) }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{coefs1 }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{kable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+Predictors & Coefficients \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+(Intercept) & 2.6596549 \\
+age & -0.0025720 \\
+menopause1 & 0.0000000 \\
+race2 & 0.0000000 \\
+race3 & 0.0108623 \\
+race4 & -0.0244505 \\
+bmi & 0.0000000 \\
+tumor\_size & -0.0545380 \\
+tumor\_grade2 & 0.0000000 \\
+tumor\_grade3 & -0.1057180 \\
+lymph\_nodes & -0.0540172 \\
+ER1 & 0.1709297 \\
+PR1 & 0.0000000 \\
+HER21 & -0.1732034 \\
+Ki67 & -0.0046400 \\
+stage2 & 0.0000000 \\
+stage3 & 0.0000000 \\
+surgery1 & -0.0009661 \\
+chemo1 & 0.0000000 \\
+hormonal\_therapy1 & 0.1589523 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a table with the exponentiated coefficients}
+\NormalTok{coefs2 }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{coef}\NormalTok{(enet.fit}\SpecialCharTok{$}\NormalTok{finalModel, enet.fit}\SpecialCharTok{$}\NormalTok{bestTune}\SpecialCharTok{$}\NormalTok{lambda)))}
+\NormalTok{coefs2}\SpecialCharTok{$}\NormalTok{Predictors }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(coefs2)}
+\FunctionTok{colnames}\NormalTok{(coefs2)[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Exponentiated Coefficients"}
+\NormalTok{coefs2 }\OtherTok{\textless{}{-}}\NormalTok{ coefs2[, }\FunctionTok{c}\NormalTok{(}\StringTok{"Predictors"}\NormalTok{, }\StringTok{"Exponentiated Coefficients"}\NormalTok{)]}
+\NormalTok{coefs2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Exponentiated Coefficients}\StringTok{\textasciigrave{}}\OtherTok{\textless{}{-}} \FunctionTok{exp}\NormalTok{(coefs2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Exponentiated Coefficients}\StringTok{\textasciigrave{}}\NormalTok{)}
+\FunctionTok{rownames}\NormalTok{(coefs2) }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{coefs2 }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{kable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+Predictors & Exponentiated Coefficients \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+(Intercept) & 14.2913563 \\
+age & 0.9974313 \\
+menopause1 & 1.0000000 \\
+race2 & 1.0000000 \\
+race3 & 1.0109216 \\
+race4 & 0.9758460 \\
+bmi & 1.0000000 \\
+tumor\_size & 0.9469225 \\
+tumor\_grade2 & 1.0000000 \\
+tumor\_grade3 & 0.8996783 \\
+lymph\_nodes & 0.9474158 \\
+ER1 & 1.1864073 \\
+PR1 & 1.0000000 \\
+HER21 & 0.8409666 \\
+Ki67 & 0.9953707 \\
+stage2 & 1.0000000 \\
+stage3 & 1.0000000 \\
+surgery1 & 0.9990344 \\
+chemo1 & 1.0000000 \\
+hormonal\_therapy1 & 1.1722820 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create table with model performance results}
+\FunctionTok{tibble}\NormalTok{(}
+  \StringTok{"RMSE"} \OtherTok{=}\NormalTok{ rmse\_A,}
+  \StringTok{"R\^{}2"} \OtherTok{=}\NormalTok{ r2\_A}
+\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{kable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rr@{}}
+\toprule\noalign{}
+RMSE & R\^{}2 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0.7465867 & 0.1685384 \\
+\end{longtable}
+
+\section{Part II}\label{part-ii}
+
+About a decade later, Researcher B conducted a separate study enrolling
+2000 breast cancer patients diagnosed between 2000 and 2005, using the
+same study design and variable definitions. Like Researcher A's study,
+all patients were followed until disease progression or death.
+Researcher B's data are stored in datB.RData. Researcher A would like to
+evaluate whether the prediction model built on the original data
+generalizes well to Researcher B's dataset. Does the model generalize
+well? If yes, provide justification. If not, build a new prediction
+model for the 2000--2005 cohort and discuss what has changed in
+prediction.
+
+\subsection{Import dataset and create
+matrix}\label{import-dataset-and-create-matrix}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{load}\NormalTok{(}\StringTok{"data/datB.RData"}\NormalTok{)}
+
+\NormalTok{datB }\OtherTok{\textless{}{-}}\NormalTok{ datB }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{menopause =} \FunctionTok{as.factor}\NormalTok{(menopause),}
+    \AttributeTok{race =} \FunctionTok{as.factor}\NormalTok{(race),}
+    \AttributeTok{tumor\_grade =} \FunctionTok{as.factor}\NormalTok{(tumor\_grade),}
+    \AttributeTok{ER =} \FunctionTok{as.factor}\NormalTok{(ER),}
+    \AttributeTok{PR =} \FunctionTok{as.factor}\NormalTok{(PR),}
+    \AttributeTok{HER2 =} \FunctionTok{as.factor}\NormalTok{(HER2),}
+    \AttributeTok{stage =} \FunctionTok{as.factor}\NormalTok{(stage),}
+    \AttributeTok{surgery =} \FunctionTok{as.factor}\NormalTok{(surgery),}
+    \AttributeTok{chemo =} \FunctionTok{as.factor}\NormalTok{(chemo),}
+    \AttributeTok{hormonal\_therapy =} \FunctionTok{as.factor}\NormalTok{(hormonal\_therapy)}
+\NormalTok{  )}
+
+\CommentTok{\# Remove id for matrix operations}
+\NormalTok{all\_datB }\OtherTok{\textless{}{-}}\NormalTok{ datB }\SpecialCharTok{|\textgreater{}} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{"id"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Evaluate the model's performance on researcher B's
+dataset}\label{evaluate-the-models-performance-on-researcher-bs-dataset}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Use all of datB to test generalizability of elastic net model}
+\NormalTok{enet\_pred\_B }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(enet.fit, }\AttributeTok{newdata =}\NormalTok{ all\_datB)}
+
+\CommentTok{\# Compare performances}
+\NormalTok{rmse\_B }\OtherTok{\textless{}{-}} \FunctionTok{RMSE}\NormalTok{(enet\_pred\_B, all\_datB}\SpecialCharTok{$}\NormalTok{log\_PFS)}
+\NormalTok{r2\_B }\OtherTok{\textless{}{-}} \FunctionTok{R2}\NormalTok{(enet\_pred\_B, all\_datB}\SpecialCharTok{$}\NormalTok{log\_PFS)}
+
+
+\CommentTok{\# Report table comparing performance}
+\NormalTok{performance\_table }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Dataset =} \FunctionTok{c}\NormalTok{(}\StringTok{"datA (Internal Test Set)"}\NormalTok{, }\StringTok{"datB (External Validation)"}\NormalTok{),}
+  \AttributeTok{RMSE =} \FunctionTok{c}\NormalTok{(}\FunctionTok{round}\NormalTok{(rmse\_A, }\DecValTok{4}\NormalTok{), }\FunctionTok{round}\NormalTok{(rmse\_B, }\DecValTok{4}\NormalTok{)),}
+  \AttributeTok{r2 =} \FunctionTok{c}\NormalTok{(}\FunctionTok{round}\NormalTok{(r2\_A, }\DecValTok{4}\NormalTok{), }\FunctionTok{round}\NormalTok{(r2\_B, }\DecValTok{4}\NormalTok{))}
+\NormalTok{)}
+
+\FunctionTok{colnames}\NormalTok{(performance\_table) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Dataset"}\NormalTok{, }\StringTok{"RMSE"}\NormalTok{, }\StringTok{"R\^{}2"}\NormalTok{)}
+
+\NormalTok{performance\_table }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{caption =} \StringTok{"Elastic Net Model Performance: Internal vs External Validation"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{full\_width =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:unnamed-chunk-8}Elastic Net Model Performance: Internal vs External Validation}\\
+\toprule
+Dataset & RMSE & R\textasciicircum{}2\\
+\midrule
+datA (Internal Test Set) & 0.7466 & 0.1685\\
+datB (External Validation) & 0.8363 & 0.1542\\
+\bottomrule
+\end{longtable}
+
+\subsection{Creation of New Model}\label{creation-of-new-model}
+
+\subsection{Import and partition data using `tidymodels'
+package}\label{import-and-partition-data-using-tidymodels-package-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+
+\NormalTok{datB\_split }\OtherTok{=} \FunctionTok{initial\_split}\NormalTok{(datB, }\AttributeTok{prop =} \FloatTok{0.8}\NormalTok{)}
+
+\CommentTok{\# Extract the training and test data}
+\NormalTok{training\_datB }\OtherTok{=} \FunctionTok{training}\NormalTok{(datB\_split)}
+\NormalTok{testing\_datB }\OtherTok{=} \FunctionTok{testing}\NormalTok{(datB\_split)}
+
+\CommentTok{\# Training data}
+\NormalTok{x\_trainB }\OtherTok{=} \FunctionTok{model.matrix}\NormalTok{(log\_PFS }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\NormalTok{ id, training\_datB)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{y\_trainB }\OtherTok{=}\NormalTok{ training\_datB}\SpecialCharTok{$}\NormalTok{log\_PFS}
+
+\CommentTok{\# Test data}
+\NormalTok{x\_testB  }\OtherTok{=} \FunctionTok{model.matrix}\NormalTok{(log\_PFS }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\NormalTok{ id, testing\_datB)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{y\_testB }\OtherTok{=}\NormalTok{ testing\_datB}\SpecialCharTok{$}\NormalTok{log\_PFS}
+
+\CommentTok{\# Remove ID}
+\NormalTok{training\_datB }\OtherTok{\textless{}{-}}\NormalTok{ training\_datB }\SpecialCharTok{|\textgreater{}}  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{"id"}\NormalTok{)}
+\NormalTok{testing\_datB  }\OtherTok{\textless{}{-}}\NormalTok{ testing\_datB  }\SpecialCharTok{|\textgreater{}} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{"id"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Exploratory Data
+Analysis}\label{exploratory-data-analysis-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Feature plots to look at trends between predictors and the outcome (log\_PFS)}
+\FunctionTok{featurePlot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ training\_datB[ ,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{11}\NormalTok{)],}
+            \AttributeTok{y =}\NormalTok{ training\_datB[ ,}\DecValTok{16}\NormalTok{],}
+            \AttributeTok{plot =} \StringTok{"scatter"}\NormalTok{,}
+            \AttributeTok{span =}\NormalTok{ .}\DecValTok{5}\NormalTok{,}
+            \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Predictors"}\NormalTok{,}\StringTok{"log\_PFS"}\NormalTok{),}
+            \AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{"p"}\NormalTok{, }\StringTok{"smooth"}\NormalTok{),}
+            \AttributeTok{layout =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{midterm_files/figure-latex/unnamed-chunk-10-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculates the correlation matrix for all the predictors}
+\FunctionTok{corrplot}\NormalTok{(}\FunctionTok{cor}\NormalTok{(x\_trainB), }\AttributeTok{method =} \StringTok{"circle"}\NormalTok{, }\AttributeTok{type =} \StringTok{"full"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{midterm_files/figure-latex/unnamed-chunk-10-2.pdf}}
+
+\subsection{Elastic Net model}\label{elastic-net-model}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Elastic Net}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{ctrl1 }\OtherTok{\textless{}{-}} \FunctionTok{trainControl}\NormalTok{(}\AttributeTok{method =} \StringTok{"cv"}\NormalTok{, }\AttributeTok{number =} \DecValTok{10}\NormalTok{) }\CommentTok{\# set up cv}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{\# set seed for reproduction}
+
+\NormalTok{enet.test.b }\OtherTok{\textless{}{-}} \FunctionTok{train}\NormalTok{(log\_PFS }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }
+                  \AttributeTok{data =}\NormalTok{ training\_datB, }
+                  \AttributeTok{method =} \StringTok{"glmnet"}\NormalTok{,}
+                  \AttributeTok{tuneGrid =} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{alpha =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length =} \DecValTok{21}\NormalTok{),}
+                                         \AttributeTok{lambda =} \FunctionTok{exp}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{7}\NormalTok{, }\AttributeTok{length =} \DecValTok{100}\NormalTok{))),}
+                  \AttributeTok{trControl =}\NormalTok{ ctrl1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo,
+## : There were missing values in resampled performance measures.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{enet.test.b}\SpecialCharTok{$}\NormalTok{bestTune}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    alpha    lambda
+## 91     0 0.2132149
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myCol }\OtherTok{\textless{}{-}} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{25}\NormalTok{)}
+\NormalTok{myPar }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{superpose.symbol =} \FunctionTok{list}\NormalTok{(}\AttributeTok{col =}\NormalTok{ myCol),}
+\AttributeTok{superpose.line =} \FunctionTok{list}\NormalTok{(}\AttributeTok{col =}\NormalTok{ myCol))}
+
+\FunctionTok{plot}\NormalTok{(enet.test.b, }\AttributeTok{par.settings =}\NormalTok{ myPar, }\AttributeTok{xTrans =}\NormalTok{ log)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{midterm_files/figure-latex/unnamed-chunk-11-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Coefficients in the final model}
+\FunctionTok{coef}\NormalTok{(enet.test.b}\SpecialCharTok{$}\NormalTok{finalModel, enet.test.b}\SpecialCharTok{$}\NormalTok{bestTune}\SpecialCharTok{$}\NormalTok{lambda)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 20 x 1 sparse Matrix of class "dgCMatrix"
+##                    s=0.2132149
+## (Intercept)        2.998651952
+## age               -0.002471616
+## menopause1        -0.008133823
+## race2             -0.040104815
+## race3             -0.024429393
+## race4              0.068951230
+## bmi               -0.001545360
+## tumor_size        -0.042193986
+## tumor_grade2       0.074766605
+## tumor_grade3      -0.106566952
+## lymph_nodes       -0.016611495
+## ER1                0.144906908
+## PR1                0.096289175
+## HER21              0.024744777
+## Ki67              -0.004773993
+## stage2             0.003120753
+## stage3            -0.074148475
+## surgery1          -0.025326354
+## chemo1            -0.030902468
+## hormonal_therapy1  0.165089624
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Predict on testing\_datB}
+\NormalTok{enet.pred.b }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(enet.test.b, }\AttributeTok{newdata =}\NormalTok{ testing\_datB)}
+
+\NormalTok{rmse\_testB }\OtherTok{\textless{}{-}} \FunctionTok{RMSE}\NormalTok{(enet.pred.b, testing\_datB}\SpecialCharTok{$}\NormalTok{log\_PFS)}
+\NormalTok{r2\_testB  }\OtherTok{\textless{}{-}} \FunctionTok{R2}\NormalTok{(enet.pred.b, testing\_datB}\SpecialCharTok{$}\NormalTok{log\_PFS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create table with the optimal tuning parameters for the chosen model}
+\NormalTok{opt\_para }\OtherTok{\textless{}{-}}\NormalTok{ enet.test.b}\SpecialCharTok{$}\NormalTok{bestTune}
+\FunctionTok{rownames}\NormalTok{(opt\_para) }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{opt\_para }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{kable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rr@{}}
+\toprule\noalign{}
+alpha & lambda \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 0.2132149 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a table with the model coefficients}
+\NormalTok{coefs1 }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{coef}\NormalTok{(enet.test.b}\SpecialCharTok{$}\NormalTok{finalModel, enet.test.b}\SpecialCharTok{$}\NormalTok{bestTune}\SpecialCharTok{$}\NormalTok{lambda)))}
+\NormalTok{coefs1}\SpecialCharTok{$}\NormalTok{Predictors }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(coefs1)}
+\FunctionTok{colnames}\NormalTok{(coefs1)[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Coefficients"}
+\NormalTok{coefs1 }\OtherTok{\textless{}{-}}\NormalTok{ coefs1[, }\FunctionTok{c}\NormalTok{(}\StringTok{"Predictors"}\NormalTok{, }\StringTok{"Coefficients"}\NormalTok{)]}
+\FunctionTok{rownames}\NormalTok{(coefs1) }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{coefs1 }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{kable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+Predictors & Coefficients \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+(Intercept) & 2.9986520 \\
+age & -0.0024716 \\
+menopause1 & -0.0081338 \\
+race2 & -0.0401048 \\
+race3 & -0.0244294 \\
+race4 & 0.0689512 \\
+bmi & -0.0015454 \\
+tumor\_size & -0.0421940 \\
+tumor\_grade2 & 0.0747666 \\
+tumor\_grade3 & -0.1065670 \\
+lymph\_nodes & -0.0166115 \\
+ER1 & 0.1449069 \\
+PR1 & 0.0962892 \\
+HER21 & 0.0247448 \\
+Ki67 & -0.0047740 \\
+stage2 & 0.0031208 \\
+stage3 & -0.0741485 \\
+surgery1 & -0.0253264 \\
+chemo1 & -0.0309025 \\
+hormonal\_therapy1 & 0.1650896 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a table with the exponentiated coefficients}
+\NormalTok{coefs2 }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{coef}\NormalTok{(enet.test.b}\SpecialCharTok{$}\NormalTok{finalModel, enet.test.b}\SpecialCharTok{$}\NormalTok{bestTune}\SpecialCharTok{$}\NormalTok{lambda)))}
+\NormalTok{coefs2}\SpecialCharTok{$}\NormalTok{Predictors }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(coefs2)}
+\FunctionTok{colnames}\NormalTok{(coefs2)[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Exponentiated Coefficients"}
+\NormalTok{coefs2 }\OtherTok{\textless{}{-}}\NormalTok{ coefs2[, }\FunctionTok{c}\NormalTok{(}\StringTok{"Predictors"}\NormalTok{, }\StringTok{"Exponentiated Coefficients"}\NormalTok{)]}
+\NormalTok{coefs2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Exponentiated Coefficients}\StringTok{\textasciigrave{}}\OtherTok{\textless{}{-}} \FunctionTok{exp}\NormalTok{(coefs2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Exponentiated Coefficients}\StringTok{\textasciigrave{}}\NormalTok{)}
+\FunctionTok{rownames}\NormalTok{(coefs2) }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{coefs2 }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{kable}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+Predictors & Exponentiated Coefficients \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+(Intercept) & 20.0584789 \\
+age & 0.9975314 \\
+menopause1 & 0.9918992 \\
+race2 & 0.9606887 \\
+race3 & 0.9758666 \\
+race4 & 1.0713840 \\
+bmi & 0.9984558 \\
+tumor\_size & 0.9586838 \\
+tumor\_grade2 & 1.0776326 \\
+tumor\_grade3 & 0.8989149 \\
+lymph\_nodes & 0.9835257 \\
+ER1 & 1.1559320 \\
+PR1 & 1.1010774 \\
+HER21 & 1.0250535 \\
+Ki67 & 0.9952374 \\
+stage2 & 1.0031256 \\
+stage3 & 0.9285338 \\
+surgery1 & 0.9749917 \\
+chemo1 & 0.9695701 \\
+hormonal\_therapy1 & 1.1794988 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create table with model performance results}
+\FunctionTok{tibble}\NormalTok{(}
+  \StringTok{"RMSE"} \OtherTok{=}\NormalTok{ rmse\_testB,}
+  \StringTok{"R\^{}2"} \OtherTok{=}\NormalTok{ r2\_testB}
+\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{kable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rr@{}}
+\toprule\noalign{}
+RMSE & R\^{}2 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0.6555808 & 0.1645233 \\
+\end{longtable}
+
+\subsection{Compare coefficients from datA \& datB
+model}\label{compare-coefficients-from-data-datb-model}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Compare datA \& datB model\textquotesingle{}s exponentiated values}
+
+\CommentTok{\# extract coefficients from both models}
+\NormalTok{coefs\_A }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{coef}\NormalTok{(enet.fit}\SpecialCharTok{$}\NormalTok{finalModel, }
+\NormalTok{                                         enet.fit}\SpecialCharTok{$}\NormalTok{bestTune}\SpecialCharTok{$}\NormalTok{lambda)))}
+\NormalTok{coefs\_B }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{coef}\NormalTok{(enet.test.b}\SpecialCharTok{$}\NormalTok{finalModel, }
+\NormalTok{                                         enet.test.b}\SpecialCharTok{$}\NormalTok{bestTune}\SpecialCharTok{$}\NormalTok{lambda)))}
+
+\CommentTok{\# rename columns}
+\FunctionTok{colnames}\NormalTok{(coefs\_A) }\OtherTok{\textless{}{-}} \StringTok{"Coef\_datA"}
+\FunctionTok{colnames}\NormalTok{(coefs\_B) }\OtherTok{\textless{}{-}} \StringTok{"Coef\_datB"}
+
+\CommentTok{\# add predictor names}
+\NormalTok{coefs\_A}\SpecialCharTok{$}\NormalTok{Predictor }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(coefs\_A)}
+\NormalTok{coefs\_B}\SpecialCharTok{$}\NormalTok{Predictor }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(coefs\_B)}
+
+\CommentTok{\# merge both into one table}
+\NormalTok{coef\_comparison }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(coefs\_A, coefs\_B, }\AttributeTok{by =} \StringTok{"Predictor"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# exponentiate both and compute difference on exponentiated scale}
+\NormalTok{coef\_comparison}\SpecialCharTok{$}\NormalTok{Exp\_datA   }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(}\FunctionTok{exp}\NormalTok{(coef\_comparison}\SpecialCharTok{$}\NormalTok{Coef\_datA), }\DecValTok{4}\NormalTok{)}
+\NormalTok{coef\_comparison}\SpecialCharTok{$}\NormalTok{Exp\_datB   }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(}\FunctionTok{exp}\NormalTok{(coef\_comparison}\SpecialCharTok{$}\NormalTok{Coef\_datB), }\DecValTok{4}\NormalTok{)}
+\NormalTok{coef\_comparison}\SpecialCharTok{$}\NormalTok{Difference }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(coef\_comparison}\SpecialCharTok{$}\NormalTok{Exp\_datB }\SpecialCharTok{{-}}\NormalTok{ coef\_comparison}\SpecialCharTok{$}\NormalTok{Exp\_datA, }\DecValTok{4}\NormalTok{)}
+
+\CommentTok{\# sort by absolute difference}
+\NormalTok{coef\_comparison }\OtherTok{\textless{}{-}}\NormalTok{ coef\_comparison[}\FunctionTok{order}\NormalTok{(}\FunctionTok{abs}\NormalTok{(coef\_comparison}\SpecialCharTok{$}\NormalTok{Difference), }
+                                          \AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{), ]}
+\FunctionTok{rownames}\NormalTok{(coef\_comparison) }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+
+\CommentTok{\# keep only exponentiated columns}
+\NormalTok{coef\_comparison }\OtherTok{\textless{}{-}}\NormalTok{ coef\_comparison[, }\FunctionTok{c}\NormalTok{(}\StringTok{"Predictor"}\NormalTok{, }\StringTok{"Exp\_datA"}\NormalTok{, }\StringTok{"Exp\_datB"}\NormalTok{, }\StringTok{"Difference"}\NormalTok{)]}
+
+\CommentTok{\# display table}
+\NormalTok{coef\_comparison }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{caption =} \StringTok{"Comparison of Elastic Net Coefficients: datA vs datB"}\NormalTok{,}
+        \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Predictor"}\NormalTok{,}
+                      \StringTok{"datA (Exp. Coefficient)"}\NormalTok{,}
+                      \StringTok{"datB (Exp. Coefficient)"}\NormalTok{,}
+                      \StringTok{"Difference"}\NormalTok{)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2338}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3117}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3117}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1429}}@{}}
+\caption{Comparison of Elastic Net Coefficients: datA vs
+datB}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Predictor
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+datA (Exp. Coefficient)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+datB (Exp. Coefficient)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Difference
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Predictor
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+datA (Exp. Coefficient)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+datB (Exp. Coefficient)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Difference
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+(Intercept) & 14.2914 & 20.0585 & 5.7671 \\
+HER21 & 0.8410 & 1.0251 & 0.1841 \\
+PR1 & 1.0000 & 1.1011 & 0.1011 \\
+race4 & 0.9758 & 1.0714 & 0.0956 \\
+tumor\_grade2 & 1.0000 & 1.0776 & 0.0776 \\
+stage3 & 1.0000 & 0.9285 & -0.0715 \\
+race2 & 1.0000 & 0.9607 & -0.0393 \\
+lymph\_nodes & 0.9474 & 0.9835 & 0.0361 \\
+race3 & 1.0109 & 0.9759 & -0.0350 \\
+ER1 & 1.1864 & 1.1559 & -0.0305 \\
+chemo1 & 1.0000 & 0.9696 & -0.0304 \\
+surgery1 & 0.9990 & 0.9750 & -0.0240 \\
+tumor\_size & 0.9469 & 0.9587 & 0.0118 \\
+menopause1 & 1.0000 & 0.9919 & -0.0081 \\
+hormonal\_therapy1 & 1.1723 & 1.1795 & 0.0072 \\
+stage2 & 1.0000 & 1.0031 & 0.0031 \\
+bmi & 1.0000 & 0.9985 & -0.0015 \\
+tumor\_grade3 & 0.8997 & 0.8989 & -0.0008 \\
+Ki67 & 0.9954 & 0.9952 & -0.0002 \\
+age & 0.9974 & 0.9975 & 0.0001 \\
+\end{longtable}
+
+\end{document}

@@ -86,11 +86,6 @@ featurePlot(x = training_datA[ ,c(1, 4, 5, 11)],
 corrplot(cor(x_trainA), method = "circle", type = "full")
 ```
 
-This data set includes 7 binary predictors, 3 categorical predictors, 5 continuous predictors, and 1 continuous outcome in log scale. 
-
-Chose elastic net because continuous variables formed a cloud, meaning we could assume linearity? homoscedasticity?
-
-Correlation plot revealed that certain variables were highly correlated. Chose to address this with elastic net because we can address colinearity for [] and [] reasons
 
 ```{r}
 # Elastic Net
